@@ -1,0 +1,17 @@
+{
+  "name": "smz-web",
+  "private": true,
+  "description": "小規模事業者向けホームページのテンプレート",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.11",
+    "tailwindcss": "4.1.11"
+  }
+}
