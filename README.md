@@ -3,7 +3,7 @@
 ブッボス（BUBBOSU）のホームページです。キャッチコピーは「地球がアトラクション。」。
 
 - 最終案（`src/`）が公開するページです。CSS と JavaScript を埋め込んだ 1 枚の `index.html` にビルドします
-- 案A〜C（`drafts/`）は検討用のデザイン案です。本番には公開しません。`npm run dev` か `npm run build:drafts` でビルドすると `dist/a.html` などができ、ヘッダーの切り替えボタン（最終案／案A／案B／案C）で行き来できます。最終案の切り替えボタンは案A〜C込みのビルドだけに出て、`npm run build`（本番）では自動で消えます
+- 案A〜C（`drafts/`）は検討用のデザイン案です。本番には公開しません。`npm run dev` か `npm run build:drafts` でビルドすると `dist/a.html` などができ、ヘッダーの切り替えボタン（案A／案B／案C）で行き来できます（最終案は空なので、今は切り替えに入れていません）。最終案のページに置いた切り替えボタンは案A〜C込みのビルドだけに出て、`npm run build`（本番）では自動で消えます
 - もとは React（App.tsx と CSS）で作られたデザインを、HTML / CSS / JavaScript だけで書き直したものです。3D の作品リングは React 部品の代わりに `src/main.js` で作り直しています
 
 ## デザイン案
