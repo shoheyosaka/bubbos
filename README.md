@@ -13,9 +13,9 @@
 | `drafts/a.html` | 案A「夜の宇宙ジャングル」 | いただいたデザインをもとに軽くした案（紺の夜空 × 黄色。カーソル演出なし、扉はレールなしでランダムに並べる） |
 | `drafts/b.html` | 案B「亜空間」 | 案A・案Cとはレイアウトから別の独立したデザイン。黒い虚空にシアンと紫の光、計器風のラベル。星のワープ、標本アーカイブ、光のゲートと未知の信号、横に流れる断片 |
 | `drafts/c.html` | 案C「余白」 | シンプルで洗練された独立デザイン。生成りの白と墨の黒、明朝体、細い線と広い余白。縦書きの入口、整然とした作品一覧、開閉式の活動リスト、ひとつずつ読む「ことば」 |
-| `src/index.html` | 最終案 | 今は案Aと同じ。決まった案に合わせてここを作り込む |
+| `src/index.html` | 最終案 | 今は空のページ。決まった案に合わせてここを作り込む |
 
-案Aは最終案（`src/`）と同じ作りで、`drafts/css/style.css`・`drafts/js/main.js` を使います。案Bと案Cはそれぞれ `b.html`＋`css/b.css`＋`js/b.js`、`c.html`＋`css/c.css`＋`js/c.js` だけで完結する別デザインです（文章のデータはそれぞれの JS の中に持っています）。
+案Aは `a.html`＋`css/style.css`＋`js/main.js` で完結しています（もとは最終案から書き出したもの。最終案を空にしたので、今は案A側にだけ残っています）。案Bと案Cはそれぞれ `b.html`＋`css/b.css`＋`js/b.js`、`c.html`＋`css/c.css`＋`js/c.js` だけで完結する別デザインです（文章のデータはそれぞれの JS の中に持っています）。
 
 ## フォルダ構成
 
@@ -23,14 +23,14 @@
 src/                 最終案のソース（ここを編集する）
   index.html         ページ本体。CSS・JS の差し込み位置に目印がある
   styles.css         Tailwind の初期化と、サイトの CSS（ほぼ素の CSS）
-  main.js            メニュー・作品リング・活動の扉・紙芝居・作品の拡大表示
+  main.js            ページの動き（今は空）
 assets/              画像（最終案・案A〜Cで共通）
 public/              robots.txt・404.html（そのまま dist/ の直下にコピーする）
 drafts/              案A〜C（--drafts を付けたときだけ dist/ にコピーする）
-  css/style.css      最終案の CSS をビルドしたもの（案A〜C共通）
+  css/style.css      案Aの CSS
   css/b.css・js/b.js 案B（亜空間）専用の CSS と JS
   css/c.css・js/c.js 案C（余白）専用の CSS と JS
-  js/main.js         最終案の main.js の写し
+  js/main.js         案Aの JS
 scripts/build.mjs    dist/ を作るスクリプト
 dist/                公開用ファイル（ビルドで生成。git には含めない）
 ```
@@ -49,12 +49,11 @@ Node.js 20 以上が必要です（`.node-version` は 22）。
 - `src/index.html` をそのまま開くと CSS が当たっていません。確認は必ず `dist/` で行います
 - 案A〜Cは完成済みの HTML です。最終案を直しても案A〜Cには反映されません（記録として残すため）
 
-## 画像の差し替え
+## 画像と文章の差し替え
 
-- 作品画像は `assets/art-*.jpg`。作品を増やすときは `src/index.html` の `ring-card` と、`src/main.js` の `artworks` を同じ順で足します
-- 紙芝居の文章は `src/main.js` の `storyPages`、活動の扉の説明は `attractionDetails`、名前のない扉のひとことは `doorWords`（扉を増やすときは index.html の door-card と一緒に足す）
-- 活動の扉は、読み込むたびに `src/main.js` が並び順・傾き・高さをばらばらにします
-- ジャングル写真（`jungle-*.jpg`）は Unsplash のもの。クレジットはページ内に表示しています
+- 作品画像は `assets/art-*.jpg`（全案で共通）
+- 文章（紙芝居、活動の説明、名前のない扉のひとこと）は、今はそれぞれの案の JS に入っています（案A `drafts/js/main.js`、案B `drafts/js/b.js`、案C `drafts/js/c.js`）
+- 最終案を作るときは、決まった案の HTML・CSS・JS を `src/` に移して作り込みます
 
 ## 公開
 
