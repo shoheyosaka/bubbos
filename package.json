@@ -1,11 +1,12 @@
 {
-  "name": "smz-web",
+  "name": "bubbos",
   "private": true,
-  "description": "小規模事業者向けホームページのテンプレート",
+  "description": "ブッボス（BUBBOSU）のホームページ",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "dev": "node scripts/build.mjs --watch"
+    "build:drafts": "node scripts/build.mjs --drafts",
+    "dev": "node scripts/build.mjs --watch --drafts"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ブッボス｜地球がアトラクション。（案B：亜空間）</title>
+<meta name="description" content="アートと遊びで、世界の見え方が変わる。ブッボス（BUBBOSU）の作品と活動を紹介するサイトです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/b.css">
+</head>
+<body>
+<!-- 案B「亜空間」：案A・案Cとは HTML / CSS / JS を分けた独立のデザイン（css/b.css・js/b.js） -->
+<div class="noise" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="bar-logo" href="#top" aria-label="ブッボス ホーム"><b>ブッボス</b><span>// BUBBOSU</span></a>
+  <nav class="bar-nav" aria-label="メインナビゲーション">
+    <a href="#world"><i>02</i>観測</a>
+    <a href="#gallery"><i>03</i>標本</a>
+    <a href="#attractions"><i>04</i>ゲート</a>
+    <a href="#contact"><i>07</i>応答</a>
+  </nav>
+  <nav class="draft-switch" aria-label="デザイン案を切り替える"><a href="index.html">最終案</a><a href="a.html">案A</a><a href="b.html" aria-current="page">案B</a><a href="c.html">案C</a></nav>
+  <button type="button" class="bar-menu" data-menu-open aria-label="メニューを開く" aria-expanded="false"><span></span><span></span></button>
+</header>
+
+<div class="menu" data-menu role="dialog" aria-modal="true" aria-label="メニュー" hidden>
+  <button type="button" class="menu-close" data-menu-close aria-label="メニューを閉じる">×</button>
+  <a href="#world"><i>02</i>観測ログ</a>
+  <a href="#gallery"><i>03</i>標本アーカイブ</a>
+  <a href="#attractions"><i>04</i>ゲート</a>
+  <a href="#fragments"><i>06</i>断片</a>
+  <a href="#contact"><i>07</i>応答</a>
+</div>
+
+<!-- 右端の計器：いまいるセクターとスクロール量 -->
+<div class="hud-rail" aria-hidden="true">
+  <span data-hud-sector>SECTOR 01</span>
+  <i><b data-hud-progress></b></i>
+  <span>∞ / UNKNOWN</span>
+</div>
+
+<main>
+  <section class="hero" id="top" data-sector="01">
+    <canvas class="warp" data-warp aria-hidden="true"></canvas>
+    <div class="hero-floor" aria-hidden="true"></div>
+    <div class="portal" aria-hidden="true">
+      <span class="ring ring-1"></span>
+      <span class="ring ring-2"></span>
+      <span class="ring ring-3"></span>
+      <span class="portal-art"><img src="assets/art-cosmos.jpg" alt=""></span>
+    </div>
+    <div class="hero-copy">
+      <p class="hud">// SIGNAL DETECTED ― COORD ∅.000 / ∞</p>
+      <h1><span class="glitch" data-text="地球が">地球が</span><br><span class="glitch grad" data-text="アトラクション。">アトラクション。</span></h1>
+      <p class="hero-sub">アートと遊びで、世界の見え方が変わる。</p>
+      <a class="btn" href="#world">ENTER SUBSPACE <span aria-hidden="true">→</span></a>
+    </div>
+    <p class="corner corner-tl" aria-hidden="true">[01] ENTRY POINT</p>
+    <p class="corner corner-br" aria-hidden="true">SCROLL ↓ TO DESCEND</p>
+  </section>
+
+  <section class="sector world" id="world" data-sector="02">
+    <header class="sector-head reveal">
+      <p class="hud">SECTOR 02 / OBSERVATION LOG</p>
+      <h2>スクロールするたび、<br><em>世界が変わる。</em></h2>
+    </header>
+    <div class="world-grid">
+      <figure class="slit reveal">
+        <img src="assets/art-stars.jpg" alt="ブッボスによる、星が鮮やかな色で描かれた作品" loading="lazy">
+        <figcaption>VIEWPORT / 01</figcaption>
+      </figure>
+      <ol class="log">
+        <li class="reveal"><span>LOG 0x01 — COSMOS</span><strong>宇宙に、正解はない。</strong></li>
+        <li class="reveal"><span>LOG 0x02 — DISTANCE</span><strong>遠くへ行くほど、自分の中に近づいていく。</strong></li>
+        <li class="reveal"><span>LOG 0x03 — ORIGIN</span><strong>自由な線と色から、名前のない世界が始まる。</strong></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sector archive" id="gallery" data-sector="03">
+    <header class="sector-head split reveal">
+      <div>
+        <p class="hud">SECTOR 03 / ARCHIVE</p>
+        <h2>未確認の<br>標本たち。</h2>
+      </div>
+      <p class="lead"><strong>線の向こうに、まだない景色。</strong>立ち止まって、近づいて。絵と目が合うまで。<br><small>標本に触れると、色が戻ります。</small></p>
+    </header>
+    <!-- 作品を増やすときは specimen を足し、js/b.js の artworks にも同じ順で追加する -->
+    <div class="specimens">
+      <button type="button" class="specimen reveal" data-art="0"><img src="assets/art-sun.jpg" alt="ブッボスの作品 01" loading="lazy"><span>SPEC-01</span><b>ARTWORK 01</b></button>
+      <button type="button" class="specimen reveal" data-art="1"><img src="assets/art-portrait.jpg" alt="ブッボスの作品 02" loading="lazy"><span>SPEC-02</span><b>ARTWORK 02</b></button>
+      <button type="button" class="specimen reveal" data-art="2"><img src="assets/art-cosmos.jpg" alt="ブッボスの作品 03" loading="lazy"><span>SPEC-03</span><b>ARTWORK 03</b></button>
+      <button type="button" class="specimen reveal" data-art="3"><img src="assets/art-hills.jpg" alt="ブッボスの作品 04" loading="lazy"><span>SPEC-04</span><b>ARTWORK 04</b></button>
+      <button type="button" class="specimen reveal" data-art="4"><img src="assets/art-flower.jpg" alt="ブッボスの作品 05" loading="lazy"><span>SPEC-05</span><b>ARTWORK 05</b></button>
+      <button type="button" class="specimen reveal" data-art="5"><img src="assets/art-trees.jpg" alt="ブッボスの作品 06" loading="lazy"><span>SPEC-06</span><b>ARTWORK 06</b></button>
+      <button type="button" class="specimen reveal" data-art="6"><img src="assets/art-stars.jpg" alt="ブッボスの作品 07" loading="lazy"><span>SPEC-07</span><b>ARTWORK 07</b></button>
+    </div>
+  </section>
+
+  <section class="sector gates-sector" id="attractions" data-sector="04">
+    <header class="sector-head split reveal">
+      <div>
+        <p class="hud">SECTOR 04 / GATES</p>
+        <h2>遊びが、<br>活動になる。</h2>
+      </div>
+      <p class="lead">おもしろいことは、世界の見方を少し変える。<br>ブッボスの活動には、4つのゲートがあります。</p>
+    </header>
+    <!-- ゲートの説明は js/b.js の attractionDetails（data-gate がキー） -->
+    <div class="gates">
+      <button type="button" class="gate gate-laugh reveal" data-gate="laugh" aria-expanded="false"><span class="gate-slit" aria-hidden="true"></span><i>01</i><b>ワライ屋</b><small>LAUGH</small></button>
+      <button type="button" class="gate gate-friends reveal" data-gate="friends" aria-expanded="false"><span class="gate-slit" aria-hidden="true"></span><i>02</i><b>ナカマ屋</b><small>CONNECT</small></button>
+      <button type="button" class="gate gate-heal reveal" data-gate="heal" aria-expanded="false"><span class="gate-slit" aria-hidden="true"></span><i>03</i><b>イヤシ屋</b><small>HEAL</small></button>
+      <button type="button" class="gate gate-story reveal" data-gate="story" aria-expanded="false"><span class="gate-slit" aria-hidden="true"></span><i>04</i><b>ハナシ屋</b><small>STORY</small></button>
+    </div>
+    <div class="signals reveal">
+      <p class="hud">UNKNOWN SIGNALS ― 14 DETECTED / 触れると、ひとことが届く。</p>
+      <!-- 光る点は js/b.js が doorWords の数だけ置く -->
+      <div class="signal-field" data-signal-field></div>
+    </div>
+  </section>
+
+  <section class="sector transmission" data-sector="05">
+    <div class="band" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="transmission-copy reveal">
+      <p class="hud">SECTOR 05 / TRANSMISSION</p>
+      <h2>世界は、<em>もっと面白く</em>できる。</h2>
+      <p>地球がアトラクション。遊びをつくる。世界の見方を変える。<br>自然も宇宙も、人との出会いも、まだまだ面白くできる。</p>
+      <blockquote><span>VOICE OF EARTH</span>生きものは、みんな絵になる。<small>山、花、風。耳をすませば、地球はずっと話している。</small></blockquote>
+      <small class="note">※掲載文はデザイン上の仮テキストです。</small>
+    </div>
+  </section>
+
+  <section class="sector fragments" id="fragments" data-sector="06">
+    <header class="sector-head split reveal">
+      <div>
+        <p class="hud">SECTOR 06 / FRAGMENTS</p>
+        <h2>絵と話を、<br>めくる。</h2>
+      </div>
+      <div class="frag-nav">
+        <button type="button" data-frag-prev aria-label="前の断片">←</button>
+        <span><b data-frag-current>01</b> / <span data-frag-total>07</span></span>
+        <button type="button" data-frag-next aria-label="次の断片">→</button>
+      </div>
+    </header>
+    <!-- 断片は js/b.js の storyPages から作られる -->
+    <div class="frag-track" data-frag-track tabindex="0" aria-label="絵と言葉の断片"></div>
+  </section>
+
+  <section class="sector response" id="contact" data-sector="07">
+    <p class="hud">SECTOR 07 / RESPONSE</p>
+    <h2>一緒に、もっと面白い<br><em>世界をつくろう。</em></h2>
+    <div class="response-actions">
+      <a class="btn btn-solid" href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">作品を購入する <span aria-hidden="true">↗</span></a>
+      <button type="button" class="btn btn-off" disabled title="問い合わせ先の設定後に有効になります">活動について問い合わせる<small>CONTACT URL COMING SOON</small></button>
+    </div>
+    <a class="back" href="#top">↑ 入口へ戻る</a>
+  </section>
+</main>
+
+<footer class="foot">
+  <a class="bar-logo" href="#top"><b>ブッボス</b><span>// BUBBOSU</span></a>
+  <p>地球がアトラクション。</p>
+  <nav><a href="#gallery">ARCHIVE</a><a href="#attractions">GATES</a><a href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">ONLINE SHOP ↗</a></nav>
+  <small>© BUBBOSU. ALL RIGHTS RESERVED.</small>
+</footer>
+
+<div class="readout" data-readout role="status" hidden></div>
+
+<div class="modal" data-modal role="dialog" aria-modal="true" aria-label="作品詳細" hidden>
+  <button type="button" class="modal-close" data-modal-close aria-label="閉じる">×</button>
+  <figure class="modal-art"><img src="" alt="" data-modal-image></figure>
+  <div class="modal-copy">
+    <p class="hud" data-modal-number>SPEC-01 / ARTWORK 01</p>
+    <h2>作品情報をここに表示</h2>
+    <p>作品名・制作年・画材・サイズ・価格など、正式な情報に差し替えられます。</p>
+    <a class="btn" href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">オンラインショップを見る <span aria-hidden="true">↗</span></a>
+  </div>
+</div>
+
+<script src="js/b.js"></script>
+</body>
+</html>

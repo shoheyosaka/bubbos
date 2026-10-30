@@ -1,33 +1,36 @@
-# smz-web
+# bubbos
 
-小規模事業者向けホームページのテンプレートです。CSS と JavaScript を埋め込んだ 1 枚の `index.html` をビルドし、GitHub Pages（確認用）や Cloudflare Pages（本番）で公開します。
+ブッボス（BUBBOSU）のホームページです。キャッチコピーは「地球がアトラクション。」。
 
-案件の進め方（ヒアリング、契約、デザイン案、公開、保守）は「[ホームページ制作 案件フロー](https://claude.ai/artifact/5TysQ6QdM3MyUcaAd9MQpw)」にまとめています。
+- 最終案（`src/`）が公開するページです。CSS と JavaScript を埋め込んだ 1 枚の `index.html` にビルドします
+- 案A〜C（`drafts/`）は検討用のデザイン案です。本番には公開しません。`npm run dev` か `npm run build:drafts` でビルドすると `dist/a.html` などができ、ヘッダーの切り替えボタン（最終案／案A／案B／案C）で行き来できます。最終案の切り替えボタンは案A〜C込みのビルドだけに出て、`npm run build`（本番）では自動で消えます
+- もとは React（App.tsx と CSS）で作られたデザインを、HTML / CSS / JavaScript だけで書き直したものです。3D の作品リングは React 部品の代わりに `src/main.js` で作り直しています
 
-## 新しい案件の始め方
+## デザイン案
 
-1. GitHub でこのリポジトリを開き、「Use this template」→「Create a new repository」で案件用のリポジトリを作る
-2. 手元に clone して `npm install`
-3. 下の「案件ごとに変えるもの」を順に直す
-4. `npm run dev` で確認しながら `src/` を作り込む
+| ファイル | 名前 | 内容 |
+| --- | --- | --- |
+| `drafts/a.html` | 案A「夜の宇宙ジャングル」 | いただいたデザインをもとに軽くした案（紺の夜空 × 黄色。カーソル演出なし、扉はレールなしでランダムに並べる） |
+| `drafts/b.html` | 案B「亜空間」 | 案A・案Cとはレイアウトから別の独立したデザイン。黒い虚空にシアンと紫の光、計器風のラベル。星のワープ、標本アーカイブ、光のゲートと未知の信号、横に流れる断片 |
+| `drafts/c.html` | 案C「余白」 | シンプルで洗練された独立デザイン。生成りの白と墨の黒、明朝体、細い線と広い余白。縦書きの入口、整然とした作品一覧、開閉式の活動リスト、ひとつずつ読む「ことば」 |
+| `src/index.html` | 最終案 | 今は案Aと同じ。決まった案に合わせてここを作り込む |
 
-### 案件ごとに変えるもの
-
-- `package.json` の `name` と `description`
-- `src/styles.css` の `@theme`（色とフォント）
-- `src/index.html` の `TODO`（`grep -n TODO src/index.html` で一覧が出ます）
-- `assets/` にロゴ・ファビコン・写真を置く
-- この README（タイトル、説明、色の表、公開先）
+案Aは最終案（`src/`）と同じ作りで、`drafts/css/style.css`・`drafts/js/main.js` を使います。案Bと案Cはそれぞれ `b.html`＋`css/b.css`＋`js/b.js`、`c.html`＋`css/c.css`＋`js/c.js` だけで完結する別デザインです（文章のデータはそれぞれの JS の中に持っています）。
 
 ## フォルダ構成
 
 ```
-src/                 ソース（ここを編集する）
+src/                 最終案のソース（ここを編集する）
   index.html         ページ本体。CSS・JS の差し込み位置に目印がある
-  styles.css         Tailwind CSS の設定（色・フォント）と独自の CSS
-  main.js            メニュー開閉・よくある質問・スクロール表示
-assets/              画像
-drafts/              （任意）検討用のデザイン案。あればそのまま dist/ にコピーされる
+  styles.css         Tailwind の初期化と、サイトの CSS（ほぼ素の CSS）
+  main.js            メニュー・作品リング・活動の扉・紙芝居・作品の拡大表示
+assets/              画像（最終案・案A〜Cで共通）
+public/              robots.txt・404.html（そのまま dist/ の直下にコピーする）
+drafts/              案A〜C（--drafts を付けたときだけ dist/ にコピーする）
+  css/style.css      最終案の CSS をビルドしたもの（案A〜C共通）
+  css/b.css・js/b.js 案B（亜空間）専用の CSS と JS
+  css/c.css・js/c.js 案C（余白）専用の CSS と JS
+  js/main.js         最終案の main.js の写し
 scripts/build.mjs    dist/ を作るスクリプト
 dist/                公開用ファイル（ビルドで生成。git には含めない）
 ```
@@ -38,58 +41,31 @@ Node.js 20 以上が必要です（`.node-version` は 22）。
 
 | コマンド | 内容 |
 | --- | --- |
-| `npm install` | 初回だけ。Tailwind CSS を入れる |
-| `npm run dev` | 保存するたびに `dist/` を作り直す。`dist/index.html` をブラウザで開いて確認する |
-| `npm run build` | `dist/` を一度だけ作る |
+| `npm install` | 初回だけ |
+| `npm run dev` | 保存するたびに `dist/` を作り直す（案A〜Cも入る）。`open dist/index.html` で確認 |
+| `npm run build` | 本番用。最終案だけの `dist/` を作る |
+| `npm run build:drafts` | 案A〜Cも入れた `dist/` を作る（確認用） |
 
-- 見た目は Tailwind CSS のクラスで書きます。ビルド時に、`src/index.html` と `src/main.js` で使っているクラスだけを CSS にして埋め込みます
 - `src/index.html` をそのまま開くと CSS が当たっていません。確認は必ず `dist/` で行います
+- 案A〜Cは完成済みの HTML です。最終案を直しても案A〜Cには反映されません（記録として残すため）
 
-## 色
+## 画像の差し替え
 
-色は `src/styles.css` の `@theme` で決めています。HTML では `bg-accent`、`text-ink` のように名前で使うので、`@theme` を変えればまとめて変わります。
-
-| 名前 | 用途 | 初期値 |
-| --- | --- | --- |
-| `ink` | メインの文字・濃い面 | `#1F2937` |
-| `muted` | 補助の文字 | `#6B7280` |
-| `accent` | アクセント（ボタン・下線・番号など） | `#2563EB` |
-| `on-accent` | アクセントの上に置く文字 | `#FFFFFF` |
-| `line` | 枠線・区切り線 | `#E5E7EB` |
-| `surface` | 淡い面（交互の背景・仮の画像） | `#F3F4F6` |
-| `page` | ページの背景 | `#FFFFFF` |
-
-## よく使う仕組み
-
-- **よくある質問の開閉**：`data-faq-group` の中の `data-faq-item` が 1 問。最初の 1 つだけ開いた状態にしておく
-- **スクロールで表示**：`section` の中の `.reveal-group` の子要素が、画面に入るとふわっと出てくる。`#top` は対象外。端末で「視差効果を減らす」を設定している人には動かさない
-- **モバイルメニュー**：`data-menu-root` の中の `data-menu-toggle` ボタンで `data-menu` を開閉する
+- 作品画像は `assets/art-*.jpg`。作品を増やすときは `src/index.html` の `ring-card` と、`src/main.js` の `artworks` を同じ順で足します
+- 紙芝居の文章は `src/main.js` の `storyPages`、活動の扉の説明は `attractionDetails`、名前のない扉のひとことは `doorWords`（扉を増やすときは index.html の door-card と一緒に足す）
+- 活動の扉は、読み込むたびに `src/main.js` が並び順・傾き・高さをばらばらにします
+- ジャングル写真（`jungle-*.jpg`）は Unsplash のもの。クレジットはページ内に表示しています
 
 ## 公開
 
-ビルドコマンドは `npm run build`、公開するフォルダは `dist` です。
-
-### GitHub Pages（確認用）
-
-`main` に push すると GitHub Actions（`.github/workflows/pages.yml`）がビルドします。GitHub Pages への公開は、次の 2 つを設定したときだけ行われます（設定するまでは、ビルドが通るかのチェックだけが動きます）。
-
-1. Settings → Pages → Source を「GitHub Actions」にする
-2. Settings → Secrets and variables → Actions → Variables に `DEPLOY_PAGES` を作り、値を `true` にする
-
-- 非公開リポジトリで GitHub Pages を使うには、GitHub の有料プラン（Pro など）が必要です。無料プランなら、確認用のリポジトリを公開にするか、Cloudflare Pages の確認用URLを使います
-
-### Cloudflare Pages（本番）
-
-お客様名義の Cloudflare でリポジトリを接続し、次のように設定します。
-
-- Build command：`npm run build`
-- Build output directory：`dist`
+- **確認用（GitHub Pages）**：`main` に push すると GitHub Actions が `npm run build:drafts` でビルドします。公開するには Settings → Pages → Source を「GitHub Actions」にし、Actions の Variables に `DEPLOY_PAGES=true` を作ります
+- **本番（Cloudflare Pages）**：Build command は `npm run build`、Build output directory は `dist`
 
 ## 公開前チェックリスト
 
 - [ ] `<meta name="robots" content="noindex">` を外す
-- [ ] `src/index.html` に `TODO` が残っていない
-- [ ] 仮のリンク（`#`）やダミーのメールアドレスが残っていない
-- [ ] 仮の画像の枠、仮の口コミが残っていない
-- [ ] タイトル・説明文・ファビコン・コピーライトの年
+- [ ] `grep -n TODO src/index.html` で残りがない（ファビコン、問い合わせ先、作品情報、仮テキスト）
+- [ ] 作品モーダルの「作品情報をここに表示」を正式な情報にする
+- [ ] 「活動について問い合わせる」ボタンのリンク先を決める
+- [ ] 独自ドメインが決まったら `public/robots.txt` に Sitemap を足す
 - [ ] 実際のスマホ（iPhone と Android）で全体を見た

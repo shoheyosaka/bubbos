@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ブッボス｜地球がアトラクション。（案C：余白）</title>
+<meta name="description" content="アートと遊びで、世界の見え方が変わる。ブッボス（BUBBOSU）の作品と活動を紹介するサイトです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/c.css">
+</head>
+<body>
+<!-- 案C「余白」：案A・案Bとは HTML / CSS / JS を分けた独立のデザイン（css/c.css・js/c.js） -->
+<header class="head" data-head>
+  <a class="logo" href="#top" aria-label="ブッボス ホーム">ブッボス<small>Bubbosu</small></a>
+  <nav class="nav" aria-label="メインナビゲーション">
+    <a href="#works">作品</a>
+    <a href="#activities">活動</a>
+    <a href="#words">ことば</a>
+    <a href="#contact">お問い合わせ</a>
+  </nav>
+  <nav class="draft-switch" aria-label="デザイン案を切り替える"><a href="index.html">最終案</a><a href="a.html">案A</a><a href="b.html">案B</a><a href="c.html" aria-current="page">案C</a></nav>
+  <button type="button" class="menu-open" data-menu-open aria-label="メニューを開く" aria-expanded="false">Menu</button>
+</header>
+
+<div class="menu" data-menu role="dialog" aria-modal="true" aria-label="メニュー" hidden>
+  <button type="button" class="menu-close" data-menu-close aria-label="メニューを閉じる">Close</button>
+  <a href="#works">作品</a>
+  <a href="#activities">活動</a>
+  <a href="#words">ことば</a>
+  <a href="#story">絵と話</a>
+  <a href="#contact">お問い合わせ</a>
+</div>
+
+<main>
+  <section class="hero" id="top">
+    <figure class="hero-art">
+      <img src="assets/art-cosmos.jpg" alt="ブッボスの作品。青と緑の渦の中に、橙色の光が浮かぶ">
+    </figure>
+    <div class="hero-copy">
+      <h1>地球が、<br>アトラクション。</h1>
+      <p>アートと遊びで、<br>世界の見え方が変わる。</p>
+    </div>
+    <p class="hero-caption">Bubbosu — Art &amp; Play</p>
+  </section>
+
+  <section class="intro fade" id="about">
+    <p class="label">01 — About</p>
+    <p class="intro-text">宇宙に、正解はない。<br>遠くへ行くほど、<br class="sp">自分の中に近づいていく。</p>
+    <p class="intro-sub">自由な線と色から、名前のない世界が始まる。<br>スクロールするたび、世界が少しずつ変わっていきます。</p>
+  </section>
+
+  <section class="works" id="works">
+    <header class="section-head fade">
+      <p class="label">02 — Works</p>
+      <h2>作品</h2>
+      <p>線の向こうに、まだない景色。立ち止まって、近づいて。絵と目が合うまで。</p>
+    </header>
+    <!-- 作品を増やすときは work を足し、js/c.js の artworks にも同じ順で追加する -->
+    <ul class="work-grid">
+      <li class="fade"><button type="button" class="work" data-art="0"><img src="assets/art-sun.jpg" alt="ブッボスの作品 01" loading="lazy"><span>01</span><b>Artwork 01</b></button></li>
+      <li class="fade"><button type="button" class="work" data-art="1"><img src="assets/art-portrait.jpg" alt="ブッボスの作品 02" loading="lazy"><span>02</span><b>Artwork 02</b></button></li>
+      <li class="fade"><button type="button" class="work" data-art="2"><img src="assets/art-cosmos.jpg" alt="ブッボスの作品 03" loading="lazy"><span>03</span><b>Artwork 03</b></button></li>
+      <li class="fade"><button type="button" class="work" data-art="3"><img src="assets/art-hills.jpg" alt="ブッボスの作品 04" loading="lazy"><span>04</span><b>Artwork 04</b></button></li>
+      <li class="fade"><button type="button" class="work" data-art="4"><img src="assets/art-flower.jpg" alt="ブッボスの作品 05" loading="lazy"><span>05</span><b>Artwork 05</b></button></li>
+      <li class="fade"><button type="button" class="work" data-art="5"><img src="assets/art-trees.jpg" alt="ブッボスの作品 06" loading="lazy"><span>06</span><b>Artwork 06</b></button></li>
+      <li class="fade"><button type="button" class="work" data-art="6"><img src="assets/art-stars.jpg" alt="ブッボスの作品 07" loading="lazy"><span>07</span><b>Artwork 07</b></button></li>
+    </ul>
+  </section>
+
+  <section class="activities" id="activities">
+    <header class="section-head fade">
+      <p class="label">03 — Activities</p>
+      <h2>遊びが、活動になる。</h2>
+      <p>おもしろいことは、世界の見方を少し変える。ブッボスの活動には、4つの入口があります。</p>
+    </header>
+    <div class="activity-list">
+      <details class="activity fade">
+        <summary><span>01</span><b>ワライ屋</b><small>Laugh</small><i aria-hidden="true"></i></summary>
+        <div><strong>笑いは、いちばん小さな革命。</strong><p>ギャグを続け、誰かを笑わせる遊び。固くなった空気に、ひとつの抜け道をつくります。</p><p class="tags">ギャグ ・ ひらめき ・ 笑う</p></div>
+      </details>
+      <details class="activity fade">
+        <summary><span>02</span><b>ナカマ屋</b><small>Connect</small><i aria-hidden="true"></i></summary>
+        <div><strong>面白い人は、面白い人を呼ぶ。</strong><p>面白い人や個性的な人たちをつなぐ活動。肩書きよりも、その人だけの色を目印にします。</p><p class="tags">出会い ・ 個性 ・ つながる</p></div>
+      </details>
+      <details class="activity fade">
+        <summary><span>03</span><b>イヤシ屋</b><small>Heal</small><i aria-hidden="true"></i></summary>
+        <div><strong>見えないものにも、耳をすます。</strong><p>気やエネルギーを通じた癒やしの活動。立ち止まり、自分の内側へ戻る時間をひらきます。</p><p class="tags">気 ・ エネルギー ・ 整える</p></div>
+      </details>
+      <details class="activity fade">
+        <summary><span>04</span><b>ハナシ屋</b><small>Story</small><i aria-hidden="true"></i></summary>
+        <div><strong>一枚の絵から、世界が動きだす。</strong><p>絵と物語を使った紙芝居の制作や表現活動。色と言葉をめくりながら、まだない景色へ進みます。</p><p class="tags">絵 ・ 紙芝居 ・ 物語る</p></div>
+      </details>
+    </div>
+  </section>
+
+  <section class="words fade" id="words">
+    <p class="label">04 — Words</p>
+    <!-- ことばは js/c.js の doorWords から選ばれる -->
+    <blockquote class="word" data-word aria-live="polite">迷子になるのも、ひとつの地図。</blockquote>
+    <p class="word-count"><span data-word-count>01</span> / <span data-word-total>14</span></p>
+    <button type="button" class="text-link" data-word-next>もうひとつ、扉をひらく</button>
+  </section>
+
+  <section class="philosophy fade">
+    <figure><img src="assets/art-flower.jpg" alt="ブッボスの作品。黄色の地に、赤い花と緑の葉" loading="lazy"></figure>
+    <div>
+      <p class="label">05 — Philosophy</p>
+      <h2>世界は、<br>もっと面白く<br>できる。</h2>
+      <p>地球がアトラクション。遊びをつくる。世界の見方を変える。自然も宇宙も、人との出会いも、まだまだ面白くできる。</p>
+      <p class="quote">生きものは、みんな絵になる。<small>山、花、風。耳をすませば、地球はずっと話している。</small></p>
+      <small class="note">※掲載文はデザイン上の仮テキストです。</small>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <header class="section-head fade">
+      <p class="label">06 — Story</p>
+      <h2>絵と話を、めくる。</h2>
+    </header>
+    <!-- ページの中身は js/c.js の storyPages から差し替わる -->
+    <div class="story-page fade" data-story-page aria-live="polite">
+      <figure><img src="assets/art-sun.jpg" alt="ブッボスの作品「恋をもたらす女神花」"></figure>
+      <div>
+        <p class="label">Base Shop Words / 01</p>
+        <h3>恋をもたらす女神花</h3>
+        <p>この花は、誰かを探しに行くための花ではありません。
+自分の中心に還ったとき、すでに始まっている恋に気づくための花です。</p>
+      </div>
+    </div>
+    <div class="story-nav">
+      <button type="button" data-story-prev aria-label="前のページ">←</button>
+      <span><span data-story-current>01</span> / <span data-story-total>07</span></span>
+      <button type="button" data-story-next aria-label="次のページ">→</button>
+    </div>
+  </section>
+
+  <section class="contact fade" id="contact">
+    <p class="label">07 — Contact</p>
+    <h2>一緒に、もっと面白い<br>世界をつくろう。</h2>
+    <div class="contact-links">
+      <a class="text-link" href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">作品を購入する ↗</a>
+      <span class="text-link is-off" title="問い合わせ先の設定後に有効になります">活動について問い合わせる（準備中）</span>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <a class="logo" href="#top">ブッボス<small>Bubbosu</small></a>
+  <nav><a href="#works">作品</a><a href="#activities">活動</a><a href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">Online Shop ↗</a></nav>
+  <small>© Bubbosu. All rights reserved.</small>
+</footer>
+
+<div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="作品詳細" hidden>
+  <button type="button" class="lightbox-close" data-lightbox-close aria-label="閉じる">Close</button>
+  <figure><img src="" alt="" data-lightbox-image></figure>
+  <div>
+    <p class="label" data-lightbox-number>Artwork 01</p>
+    <h2>作品情報をここに表示</h2>
+    <p>作品名・制作年・画材・サイズ・価格など、正式な情報に差し替えられます。</p>
+    <a class="text-link" href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">オンラインショップを見る ↗</a>
+  </div>
+</div>
+
+<script src="js/c.js"></script>
+</body>
+</html>

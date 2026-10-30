@@ -6,139 +6,456 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- TODO: 公開前に外す（検索エンジンに載せない設定） -->
 <meta name="robots" content="noindex">
-<!-- TODO: ページのタイトルと説明文 -->
-<title>会社名｜業種</title>
-<meta name="description" content="地域・業種・強みを1〜2文で。">
-<!-- TODO: ファビコン（assets/ に置く） -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>ブッボス｜地球がアトラクション。</title>
+<meta name="description" content="アートと遊びで、世界の見え方が変わる。ブッボス（BUBBOSU）の作品と活動を紹介するサイトです。">
+<!-- TODO: ファビコン（assets/ に favicon-32.png と apple-touch-icon.png を置いてから下の2行を戻す） -->
+<!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"> -->
+<!-- <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"> -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <!-- build:css（npm run build で src/styles.css から生成した CSS が入ります） -->
 </head>
-<body class="bg-page text-ink">
-<div class="min-h-screen pb-16 sm:pb-20">
+<body>
+<div class="site-shell">
+  <div class="paper-noise" aria-hidden="true"></div>
 
-<header data-menu-root class="fixed inset-x-0 top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
-  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-20 sm:px-6">
-    <!-- TODO: ロゴ画像と会社名 -->
-    <a href="#top" class="flex items-center gap-3" aria-label="会社名 ホーム">
-      <span class="grid size-10 place-items-center rounded-xl bg-accent font-black text-on-accent">L</span>
-      <strong class="text-base font-black tracking-tight sm:text-lg">会社名</strong>
+  <header class="site-header">
+    <a class="logo" href="#top" aria-label="ブッボス ホーム">
+      <strong>ブッボス</strong>
+      <small>BUBBOSU</small>
     </a>
-    <nav class="hidden items-center gap-7 lg:flex">
-      <a href="#about" class="text-xs font-bold transition hover:text-muted">私たちについて</a>
-      <a href="#faq" class="text-xs font-bold transition hover:text-muted">よくある質問</a>
-      <a href="#company" class="text-xs font-bold transition hover:text-muted">会社情報</a>
+    <nav class="desktop-nav" aria-label="メインナビゲーション">
+      <a href="#world">世界</a>
+      <a href="#gallery">作品</a>
+      <a href="#attractions">活動</a>
+      <a href="#contact">コンタクト</a>
     </nav>
-    <!-- TODO: 電話番号 -->
-    <a href="tel:00000000000" class="hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white sm:flex">000-0000-0000</a>
-    <button type="button" data-menu-toggle class="grid size-10 place-items-center rounded-lg bg-surface sm:hidden" aria-label="メニュー" aria-expanded="false">
-      <svg data-menu-icon="open" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
-      <svg data-menu-icon="close" class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+    <!-- drafts:start（案A〜Cへの切り替え。npm run build（本番）では消える） -->
+    <nav class="draft-switch" aria-label="デザイン案を切り替える"><a href="index.html" aria-current="page">最終案</a><a href="a.html">案A</a><a href="b.html">案B</a><a href="c.html">案C</a></nav>
+    <!-- drafts:end -->
+    <button type="button" class="menu-button" data-menu-open aria-label="メニューを開く" aria-expanded="false">
+      <span></span>
+      <span></span>
     </button>
+  </header>
+
+  <div class="mobile-menu" data-menu role="dialog" aria-modal="true" aria-label="メニュー" hidden>
+    <button type="button" class="menu-close" data-menu-close aria-label="メニューを閉じる">×</button>
+    <a href="#world"><span>01</span>世界</a>
+    <a href="#gallery"><span>02</span>作品</a>
+    <a href="#attractions"><span>03</span>活動</a>
+    <a href="#contact"><span>04</span>コンタクト</a>
   </div>
-  <nav data-menu class="hidden border-t border-line bg-white px-5 py-3 sm:hidden">
-    <a href="#about" class="block border-b border-line py-3 text-sm font-bold">私たちについて</a>
-    <a href="#faq" class="block border-b border-line py-3 text-sm font-bold">よくある質問</a>
-    <a href="#company" class="block py-3 text-sm font-bold">会社情報</a>
-  </nav>
-</header>
 
-<main>
-  <!-- ヒーロー（ページの一番上） -->
-  <section id="top" class="scroll-mt-20 bg-white pt-16 sm:pt-20">
-    <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 sm:py-16 lg:grid-cols-2 lg:items-center">
-      <div>
-        <p class="mb-5 w-fit rounded-md bg-ink px-3 py-1.5 text-xs font-bold text-white">TODO: 地域・業種のひとこと</p>
-        <h1 class="text-[length:min(2.5rem,8vw)] font-black leading-[1.15] tracking-tight sm:text-5xl">
-          キャッチコピー<br>
-          <span class="relative inline-block">2行目まで。<span class="absolute inset-x-0 -bottom-3 h-2 bg-accent"></span></span>
-        </h1>
-        <p class="mt-8 max-w-xl text-base leading-8 font-bold text-muted">TODO: 何をしている会社かを1〜2文で。</p>
-        <a href="#about" class="mt-8 inline-flex rounded-full bg-accent px-6 py-3.5 text-sm font-bold text-on-accent">くわしく見る</a>
+  <main>
+    <section class="hero" id="top" data-hero>
+      <div class="cosmic-jungle" aria-hidden="true">
+        <div class="jungle-vine vine-left"><span></span><span></span><span></span><span></span></div>
+        <div class="jungle-vine vine-right"><span></span><span></span><span></span><span></span></div>
+        <div class="jungle-orbit orbit-one"><img src="assets/art-stars.jpg" alt=""></div>
+        <div class="jungle-orbit orbit-two"><img src="assets/art-flower.jpg" alt=""></div>
+        <div class="jungle-moon"><i></i></div>
+        <svg class="jungle-star jungle-star-a" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 5 46 30 70 20 51 39 73 53 47 48 40 74 34 49 8 58 29 40 7 25 34 31Z" /></svg>
+        <svg class="jungle-star jungle-star-b" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 5 46 30 70 20 51 39 73 53 47 48 40 74 34 49 8 58 29 40 7 25 34 31Z" /></svg>
+        <span class="jungle-comet"></span>
+        <span class="jungle-seed seed-a">✦</span>
+        <span class="jungle-seed seed-b">●</span>
+        <span class="jungle-seed seed-c">✦</span>
       </div>
-      <!-- TODO: メイン画像 -->
-      <div class="grid aspect-[3/2] place-items-center rounded-3xl bg-surface text-xs font-bold tracking-widest text-muted">MAIN VISUAL</div>
-    </div>
-  </section>
-
-  <!-- 汎用セクション：このブロックを複製してサービス・流れ・口コミなどを作る -->
-  <section id="about" class="scroll-mt-20 bg-surface px-4 py-20 sm:px-6 sm:py-24">
-    <div class="reveal-group mx-auto max-w-6xl">
-      <div class="mb-8 text-center">
-        <p class="mb-2 text-xs font-bold tracking-[0.22em] text-accent">ABOUT US</p>
-        <h2 class="text-2xl font-black tracking-tight sm:text-3xl">私たちについて</h2>
+      <div class="hero-copy">
+        <p class="eyebrow">WELCOME TO BUBBOSU'S PLANET</p>
+        <h1>地球が<br><span>アトラクション。</span></h1>
+        <p class="hero-sub">アートと遊びで、世界の見え方が変わる。</p>
       </div>
-      <div class="rounded-3xl bg-white p-7 sm:p-10">
-        <p class="text-sm leading-7 text-muted">TODO: 本文。</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq" class="scroll-mt-20 bg-white px-4 py-20 sm:px-6 sm:py-24">
-    <div class="reveal-group mx-auto max-w-4xl">
-      <div class="mb-8 text-center">
-        <p class="mb-2 text-xs font-bold tracking-[0.22em] text-accent">FAQ</p>
-        <h2 class="text-2xl font-black tracking-tight sm:text-3xl">よくある質問</h2>
-      </div>
-      <!-- 質問を増やすときは data-faq-item のブロックを複製する。最初の1つだけ開いた状態にしておく -->
-      <div data-faq-group class="space-y-3">
-        <div data-faq-item class="overflow-hidden rounded-2xl border border-line">
-          <button type="button" data-faq-button aria-expanded="true" class="flex w-full items-center gap-4 bg-white p-5 text-left sm:p-6">
-            <span class="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-xs font-black text-on-accent">Q</span>
-            <span class="flex-1 font-bold">TODO: 質問</span>
-            <span data-faq-indicator class="rotate-45 text-2xl text-muted transition">＋</span>
-          </button>
-          <div data-faq-answer class="border-t border-line bg-surface px-5 py-5 pl-[4.75rem] text-sm leading-7 text-muted">TODO: 回答</div>
+      <div class="hero-art-wrap">
+        <div class="hero-stamp">BUBBOSU ART</div>
+        <div class="art-visual photo-art" style="background: #E25437">
+          <img src="assets/art-cosmos.jpg" alt="ブッボスによる、花や星が鮮やかな色と力強い線で描かれた作品" style="transform: scale(1.12); transform-origin: 62% 50%">
         </div>
-        <div data-faq-item class="overflow-hidden rounded-2xl border border-line">
-          <button type="button" data-faq-button aria-expanded="false" class="flex w-full items-center gap-4 bg-white p-5 text-left sm:p-6">
-            <span class="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-xs font-black text-on-accent">Q</span>
-            <span class="flex-1 font-bold">TODO: 質問</span>
-            <span data-faq-indicator class="text-2xl text-muted transition">＋</span>
-          </button>
-          <div data-faq-answer class="hidden border-t border-line bg-surface px-5 py-5 pl-[4.75rem] text-sm leading-7 text-muted">TODO: 回答</div>
+        <svg class="hero-star" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 5 46 30 70 20 51 39 73 53 47 48 40 74 34 49 8 58 29 40 7 25 34 31Z" /></svg>
+        <span class="orbit-line"></span>
+      </div>
+      <div class="hero-collage" aria-hidden="true">
+        <img src="assets/art-sun.jpg" alt="">
+        <img src="assets/art-hills.jpg" alt="">
+        <img src="assets/art-flower.jpg" alt="">
+      </div>
+      <div class="hero-note">
+        <span>01</span>
+        <p>自由な線と色から、名前のない世界が始まる。</p>
+      </div>
+      <a class="scroll-cue" href="#world">SCROLL TO EXPLORE<span>↓</span></a>
+    </section>
+
+    <section class="world-section" id="world">
+      <div class="section-intro">
+        <p class="eyebrow light">SECTION 02 / WORLD</p>
+        <h2>スクロールするたび、<br><i>世界が変わる。</i></h2>
+      </div>
+      <article class="world-panel cosmos">
+        <div class="world-number">A</div>
+        <div class="world-copy cosmos-copy" data-scatter-group>
+          <p><span class="scatter-text scatter-kicker" data-scatter>COSMOS</span></p>
+          <h3><span class="scatter-text" data-scatter>宇宙に、正解はない。</span></h3>
+          <span><span class="scatter-text scatter-description" data-scatter>遠くへ行くほど、自分の中に近づいていく。</span></span>
+        </div>
+        <div class="floating-art art-one">
+          <div class="art-visual photo-art" style="background: #E25437">
+            <img src="assets/art-cosmos.jpg" alt="ブッボスによる、花や星が鮮やかな色と力強い線で描かれた作品" style="object-position: 75% center" loading="lazy">
+            <span class="placeholder-label">ARTWORK DETAIL</span>
+          </div>
+        </div>
+        <div class="planet planet-one"></div>
+        <div class="planet planet-two"></div>
+      </article>
+    </section>
+
+    <section class="gallery-section" id="gallery">
+      <div class="gallery-heading">
+        <p class="eyebrow">SECTION 03 / ORIGINAL WORKS</p>
+        <h2>ART<br>GALLERY</h2>
+        <p class="jp-title">作品を見る</p>
+        <p class="gallery-description">
+          <strong>線の向こうに、まだない景色。</strong>
+          <span>立ち止まって、近づいて。絵と目が合うまで。</span>
+        </p>
+      </div>
+      <div class="ring-gallery">
+        <!-- 作品を増やすときは ring-card を足し、main.js の artworks にも同じ順で追加する -->
+        <div class="ring-carousel" data-ring tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="ブッボス作品の3Dリングギャラリー">
+          <div class="ring-stage" data-ring-stage>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 01 を見る">
+              <span class="ring-card-face"><img src="assets/art-sun.jpg" alt="ブッボスの作品 01" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 01</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 02 を見る">
+              <span class="ring-card-face"><img src="assets/art-portrait.jpg" alt="ブッボスの作品 02" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 02</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 03 を見る">
+              <span class="ring-card-face"><img src="assets/art-cosmos.jpg" alt="ブッボスの作品 03" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 03</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 04 を見る">
+              <span class="ring-card-face"><img src="assets/art-hills.jpg" alt="ブッボスの作品 04" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 04</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 05 を見る">
+              <span class="ring-card-face"><img src="assets/art-flower.jpg" alt="ブッボスの作品 05" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 05</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 06 を見る">
+              <span class="ring-card-face"><img src="assets/art-trees.jpg" alt="ブッボスの作品 06" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 06</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ring-card" data-ring-card aria-label="ARTWORK 07 を見る">
+              <span class="ring-card-face"><img src="assets/art-stars.jpg" alt="ブッボスの作品 07" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>ARTWORK 07</b></span></span>
+              <span class="ring-card-back" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+        <div class="ring-gallery-action">
+          <p>DRAG TO ROTATE<small>横にドラッグして作品をめぐる</small></p>
+          <button type="button" data-ring-open>正面の作品を大きく見る ↗</button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="company" class="scroll-mt-20 bg-surface px-4 py-20 sm:px-6 sm:py-24">
-    <div class="reveal-group mx-auto max-w-4xl">
-      <div class="mb-8 text-center">
-        <p class="mb-2 text-xs font-bold tracking-[0.22em] text-accent">COMPANY</p>
-        <h2 class="text-2xl font-black tracking-tight sm:text-3xl">会社情報</h2>
+    <section class="attractions-section" id="attractions">
+      <div class="attractions-title">
+        <p class="eyebrow">SECTION 04 / ATTRACTIONS</p>
+        <h2>遊びが、活動になる。</h2>
+        <p>おもしろいことは、世界の見方を少し変える。<br>ブッボスの活動には、4つの入口があります。</p>
+        <div class="attraction-intro-note">
+          <span>CHOOSE AN ENTRANCE</span>
+          <b>気になる入口から、のぞいてみる。</b>
+        </div>
+        <div class="attraction-active-panel" data-door-panel role="status" hidden></div>
       </div>
-      <!-- TODO: 会社情報 -->
-      <dl class="rounded-3xl bg-white px-7 sm:px-10">
-        <div class="grid gap-1 border-b border-line py-4 sm:grid-cols-[9rem_1fr]"><dt class="text-sm font-black">会社名</dt><dd class="text-sm text-muted">会社名</dd></div>
-        <div class="grid gap-1 border-b border-line py-4 sm:grid-cols-[9rem_1fr]"><dt class="text-sm font-black">所在地</dt><dd class="text-sm text-muted">住所</dd></div>
-        <div class="grid gap-1 border-b border-line py-4 sm:grid-cols-[9rem_1fr]"><dt class="text-sm font-black">電話番号</dt><dd class="text-sm text-muted">000-0000-0000</dd></div>
-        <div class="grid gap-1 py-4 sm:grid-cols-[9rem_1fr]"><dt class="text-sm font-black">受付時間</dt><dd class="text-sm text-muted">9:00〜18:00</dd></div>
-      </dl>
-    </div>
-  </section>
+      <!-- 扉の説明文は main.js の attractionDetails、名前のない扉のひとことは doorWords にある（data-door がキー）。並び順と傾きは読み込むたびに main.js がばらばらにする -->
+      <div class="door-field" data-door-field>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-a dummy-cyan" data-door="dummy-a" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>✦</span></div>
+            <button type="button" class="attraction-door door-art-laugh" data-door="laugh" aria-expanded="false" aria-label="ワライ屋の扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-b dummy-violet" data-door="dummy-b" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-c dummy-lime" data-door="dummy-c" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>✦</span></div>
+            <button type="button" class="attraction-door door-art-friends" data-door="friends" aria-expanded="false" aria-label="ナカマ屋の扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-d dummy-orange" data-door="dummy-d" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-e dummy-yellow" data-door="dummy-e" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-f dummy-pink" data-door="dummy-f" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>✦</span></div>
+            <button type="button" class="attraction-door door-art-heal" data-door="heal" aria-expanded="false" aria-label="イヤシ屋の扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-a dummy-teal" data-door="dummy-g" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-b dummy-coral" data-door="dummy-h" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-c dummy-indigo" data-door="dummy-i" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>✦</span></div>
+            <button type="button" class="attraction-door door-art-story" data-door="story" aria-expanded="false" aria-label="ハナシ屋の扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-d dummy-mint" data-door="dummy-j" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-e dummy-gold" data-door="dummy-k" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-f dummy-rose" data-door="dummy-l" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-a dummy-sky" data-door="dummy-m" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+        <article class="door-card is-dummy">
+          <div class="door-frame">
+            <div class="door-darkness" aria-hidden="true"><span>?</span></div>
+            <button type="button" class="attraction-door door-shape-b dummy-plum" data-door="dummy-n" aria-expanded="false" aria-label="名前のない扉を開く">
+              <span class="door-panel-art" aria-hidden="true"><i></i><b></b><em></em></span><span class="door-knob"></span>
+            </button>
+          </div>
+        </article>
+      </div>
+      <div class="attraction-manifesto">
+        <span>笑う。</span>
+        <span>つながる。</span>
+        <span>整える。</span>
+        <span>物語る。</span>
+        <p>遊び方が変わると、世界の見え方も変わっていく。</p>
+      </div>
+    </section>
 
-  <div class="bg-ink px-4 py-10 text-white sm:px-6">
-    <div class="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <p class="text-lg font-black">会社名</p>
-      <!-- TODO: 公開した年と権利者の名前 -->
-      <p class="text-xs text-white/60">© 2026 会社名</p>
+    <section class="philosophy-section">
+      <div class="philosophy-art">
+        <div class="art-visual photo-art" style="background: #173D34">
+          <img src="assets/art-trees.jpg" alt="ブッボスによる、花や星が鮮やかな色と力強い線で描かれた作品" style="object-position: 30% center" loading="lazy">
+          <span class="placeholder-label">ARTWORK DETAIL</span>
+        </div>
+      </div>
+      <div class="philosophy-copy">
+        <p class="eyebrow">SECTION 05 / PHILOSOPHY</p>
+        <h2>世界は、<br><em>もっと面白く</em><br>できる。</h2>
+        <p>地球がアトラクション。<br>遊びをつくる。世界の見方を変える。<br>自然も宇宙も、人との出会いも、<br>まだまだ面白くできる。</p>
+        <blockquote class="nature-quote">
+          <span>VOICE OF EARTH</span>
+          <strong>生きものは、みんな絵になる。</strong>
+          <p>山、花、風。耳をすませば、地球はずっと話している。</p>
+        </blockquote>
+        <!-- TODO: 正式な文章に差し替えたら消す -->
+        <small>※掲載文はデザイン上の仮テキストです。</small>
+      </div>
+      <div class="giant-type">EARTH IS AN ATTRACTION</div>
+    </section>
+
+    <section class="kamishibai-section" data-story>
+      <div class="kamishibai-jungle" aria-hidden="true">
+        <img class="jungle-photo-rays" src="assets/jungle-rays.jpg" alt="" loading="lazy">
+        <img class="jungle-photo-foliage foliage-left" src="assets/jungle-foliage.jpg" alt="" loading="lazy">
+        <img class="jungle-photo-foliage foliage-right" src="assets/jungle-foliage.jpg" alt="" loading="lazy">
+      </div>
+      <div class="kamishibai-heading">
+        <p class="eyebrow">SECTION 06 / KAMISHIBAI</p>
+        <h2>絵と話を、めくる。</h2>
+      </div>
+      <div class="story-stage">
+        <button type="button" class="story-arrow prev" data-story-prev aria-label="前のページ">
+          <svg viewBox="0 0 56 28" aria-hidden="true" class="flip"><path d="M3 14c12-2 27-2 45 0M39 4l10 10-10 10" /></svg>
+        </button>
+        <div class="wood-frame">
+          <!-- ページの中身は main.js の storyPages から差し替わる -->
+          <div class="story-page" data-story-page aria-live="polite">
+            <div class="art-visual photo-art" style="background: #174A98">
+              <img src="assets/art-sun.jpg" alt="ブッボスによる、花や星が鮮やかな色と力強い線で描かれた作品" loading="lazy">
+              <span class="placeholder-label">ARTWORK DETAIL</span>
+            </div>
+            <div class="story-caption">
+              <span>BASE SHOP WORDS / 01</span>
+              <h3>恋をもたらす女神花</h3>
+              <p>この花は、誰かを探しに行くための花ではありません。
+自分の中心に還ったとき、すでに始まっている恋に気づくための花です。</p>
+              <i class="story-spark">✦</i>
+              <small>01 / 07</small>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="story-arrow next" data-story-next aria-label="次のページ">
+          <svg viewBox="0 0 56 28" aria-hidden="true"><path d="M3 14c12-2 27-2 45 0M39 4l10 10-10 10" /></svg>
+        </button>
+      </div>
+      <div class="story-pagination">
+        <span data-story-current>01</span>
+        <i></i>
+        <span data-story-total>07</span>
+      </div>
+      <p class="jungle-photo-credit">
+        Jungle photography by
+        <a href="https://unsplash.com/@sanailar" target="_blank" rel="noreferrer">Sanaila Rasheed</a>,
+        <a href="https://unsplash.com/@abdullahaslam_11575630_sink" target="_blank" rel="noreferrer">Abdullah Aslam</a> &amp;
+        <a href="https://unsplash.com/@jfs_urbano" target="_blank" rel="noreferrer">Jose Urbano</a>,
+        <a href="https://unsplash.com/@nate_dumlao" target="_blank" rel="noreferrer">Nathan Dumlao</a>
+        on Unsplash
+      </p>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <svg class="contact-star star-left" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 5 46 30 70 20 51 39 73 53 47 48 40 74 34 49 8 58 29 40 7 25 34 31Z" /></svg>
+      <svg class="contact-star star-right" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 5 46 30 70 20 51 39 73 53 47 48 40 74 34 49 8 58 29 40 7 25 34 31Z" /></svg>
+      <p class="eyebrow">SECTION 07 / CONTACT</p>
+      <h2>一緒に、もっと面白い<br>世界をつくろう。</h2>
+      <div class="contact-actions">
+        <a class="primary-action" href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">
+          <span>作品を購入する</span>
+          <svg viewBox="0 0 56 28" aria-hidden="true"><path d="M3 14c12-2 27-2 45 0M39 4l10 10-10 10" /></svg>
+        </a>
+        <!-- TODO: 問い合わせ先が決まったら a タグにして有効にする -->
+        <button type="button" class="secondary-action" disabled title="問い合わせ先の設定後に有効になります">
+          活動について問い合わせる
+          <small>CONTACT URL COMING SOON</small>
+        </button>
+      </div>
+      <a href="#top" class="back-top">ブッボスの世界をもう一度楽しむ ↑</a>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo footer-logo" href="#top">
+      <strong>ブッボス</strong>
+      <small>BUBBOSU</small>
+    </a>
+    <p>地球がアトラクション。</p>
+    <div class="footer-links">
+      <a href="#gallery">ART GALLERY</a>
+      <a href="#attractions">ATTRACTIONS</a>
+      <a href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">ONLINE SHOP ↗</a>
+    </div>
+    <small>© BUBBOSU. ALL RIGHTS RESERVED.</small>
+  </footer>
+
+  <div class="art-modal" data-art-modal role="dialog" aria-modal="true" aria-label="作品詳細" hidden>
+    <button type="button" class="modal-close" data-art-modal-close aria-label="閉じる">×</button>
+    <div class="modal-art">
+      <div class="art-visual photo-art" data-art-modal-visual>
+        <img src="" alt="ブッボスによる、花や星が鮮やかな色と力強い線で描かれた作品" data-art-modal-image>
+        <span class="placeholder-label">ARTWORK DETAIL</span>
+      </div>
+    </div>
+    <div class="modal-copy">
+      <p data-art-modal-number>ARTWORK 01</p>
+      <!-- TODO: 作品ごとの正式な情報（main.js の artworks に足す） -->
+      <h2>作品情報をここに表示</h2>
+      <span>作品名・制作年・画材・サイズ・価格など、正式な情報に差し替えられます。</span>
+      <a href="https://bubbosu.base.shop/" target="_blank" rel="noreferrer">
+        オンラインショップを見る
+        <svg viewBox="0 0 56 28" aria-hidden="true"><path d="M3 14c12-2 27-2 45 0M39 4l10 10-10 10" /></svg>
+      </a>
     </div>
   </div>
-</main>
-
-<!-- 画面下に固定の連絡ボタン。TODO: リンク先（電話・LINE・メール） -->
-<footer class="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-white">
-  <div class="mx-auto grid h-16 max-w-4xl grid-cols-3 sm:h-20 sm:gap-2 sm:p-2">
-    <a href="tel:00000000000" class="flex items-center justify-center bg-accent text-xs font-bold text-on-accent sm:rounded-xl sm:text-sm">電話で相談する</a>
-    <a href="#" target="_blank" rel="noopener" class="flex items-center justify-center bg-[#06C755] text-xs font-bold text-white sm:rounded-xl sm:text-sm">LINEで相談する</a>
-    <a href="mailto:info@example.com" class="flex items-center justify-center bg-ink text-xs font-bold text-white sm:rounded-xl sm:text-sm">メールで相談する</a>
-  </div>
-</footer>
 </div>
+
 <!-- build:js（npm run build で src/main.js の中身が入ります） -->
 </body>
 </html>
