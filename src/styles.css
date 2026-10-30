@@ -2,15 +2,634 @@
 @source "./index.html";
 @source "./main.js";
 
-/* 最終案：デザイン案が決まったら、ここにサイトの CSS を書く */
+/* ---- 色とフォント ---- */
+:root {
+  --paper: #f2ead7;
+  --paper-light: #faf5e8;
+  --ink: #191916;
+  --blue: #164798;
+  --navy: #07183a;
+  --green: #287f51;
+  --yellow: #efc538;
+  --orange: #e66138;
+  --brown: #7b4c2c;
+  --line: rgba(25, 25, 22, 0.28);
+  --display: 'Kaisei Decol', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
 
-/* ---- デザイン案の切り替え（案A〜C込みのビルドだけに出る） ---- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--navy); color: var(--paper); font-family: var(--sans); overflow-x: hidden; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { color: inherit; font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+.site-shell { min-width: 0; overflow: clip; }
+main > section:not(.hero) { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+.paper-noise {
+  position: fixed; inset: 0; opacity: .08; z-index: 20; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+}
+.eyebrow { margin: 0 0 1.5rem; font: 700 .7rem/1 var(--sans); letter-spacing: .22em; }
+.eyebrow.light { color: var(--paper); opacity: .7; }
+
+/* ---- ヘッダー ---- */
+.site-header {
+  position: absolute; z-index: 30; top: 0; left: 0; width: 100%; padding: 1.6rem 4vw;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.site-header .logo, .desktop-nav { color: var(--paper-light); text-shadow: 1px 2px 0 rgba(7,24,58,.5); }
+.logo { display: inline-flex; align-items: flex-end; gap: .5rem; transform: rotate(-3deg); }
+.logo strong { font: 700 1.8rem/.9 var(--display); letter-spacing: -.12em; }
+.logo small { font-size: .55rem; font-weight: 900; letter-spacing: .2em; }
+.desktop-nav { display: flex; gap: 2.2rem; font-size: .72rem; font-weight: 700; }
+.desktop-nav a { position: relative; }
+.desktop-nav a::after { content: ''; position: absolute; width: 0; height: 2px; background: var(--yellow); left: 0; bottom: -.5rem; transition: width .25s; }
+.desktop-nav a:hover::after { width: 100%; }
+.menu-button { display: none; width: 3rem; height: 3rem; background: rgba(7,24,58,.35); border: 1px solid var(--paper-light); border-radius: 50%; align-items: center; justify-content: center; flex-direction: column; gap: .35rem; cursor: pointer; }
+.menu-button span { width: 1.2rem; height: 2px; background: var(--paper-light); }
+
+/* ---- ヘッダーのデザイン案切り替え（案A〜C込みのビルドだけに出る） ---- */
 .draft-switch {
-  position: fixed; z-index: 200; top: 1rem; right: 1rem;
   display: flex; gap: .2rem; padding: .25rem; border: 1px solid rgba(25,25,22,.35); border-radius: 999px;
-  background: rgba(250,245,232,.94); box-shadow: 0 6px 18px rgba(0,0,0,.15);
-  font: 900 .62rem/1 'Noto Sans JP', sans-serif;
+  background: rgba(250,245,232,.94); box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  font: 900 .62rem/1 'Noto Sans JP', sans-serif; text-shadow: none;
 }
 .draft-switch a { padding: .55rem .8rem; border-radius: 999px; color: #191916; white-space: nowrap; }
 .draft-switch a:hover { background: rgba(25,25,22,.08); }
 .draft-switch a[aria-current="page"] { background: #191916; color: #faf5e8; }
+
+@media (max-width: 900px) {
+  .site-header { gap: .6rem; }
+  .draft-switch { margin-left: auto; }
+}
+@media (max-width: 640px) {
+  .site-header .logo { flex-shrink: 0; }
+  .site-header .logo small { display: none; }
+  .draft-switch { gap: 0; padding: .2rem; font-size: .56rem; }
+  .draft-switch a { padding: .5rem .45rem; }
+}
+
+/* ---- ヒーロー ---- */
+.hero { --jungle-x: 0; --jungle-y: 0; position: relative; min-height: 100svh; padding: 8rem 3vw 4rem; display: grid; grid-template-columns: .72fr 1.28fr; align-items: center; background: url('assets/art-cosmos.jpg') center/cover; color: var(--paper-light); isolation: isolate; }
+.hero:not(.is-active) h1, .hero:not(.is-active) h1 span, .hero:not(.is-active) .cosmic-jungle *, .hero:not(.is-active) .hero-ride *, .hero:not(.is-active) .hero-ride *::after, .hero:not(.is-active) .scroll-cue span { animation-play-state: paused !important; }
+.hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(4,13,35,.96) 0%, rgba(4,13,35,.78) 35%, rgba(4,13,35,.28) 72%), linear-gradient(0deg, rgba(4,13,35,.72), transparent 55%); }
+.hero::before { content: ''; position: absolute; inset: auto auto 10% -5%; width: 22vw; height: 22vw; border: 2px solid var(--orange); border-radius: 50%; opacity: .4; }
+.hero-copy { position: relative; z-index: 6; padding: 2rem 2.4rem 2.4rem 3vw; }
+.hero h1 { margin: 0; font: 700 clamp(3.4rem, 7vw, 8.2rem)/.93 var(--display); letter-spacing: -.08em; text-shadow: 3px 4px 0 rgba(7,24,58,.72), 0 12px 28px rgba(0,0,0,.3); animation: heroTitleFloat 5.8s ease-in-out infinite; transform-origin: 35% 50%; }
+.hero h1 span { display: inline-block; color: var(--yellow); white-space: nowrap; text-shadow: 3px 3px 0 rgba(7,24,58,.8); animation: heroTitleAccentFloat 7.2s -1.4s ease-in-out infinite; }
+.hero-sub { margin: 2.2rem 0 0; font-size: clamp(.9rem, 1.5vw, 1.2rem); font-weight: 700; letter-spacing: .08em; }
+.hero-art-wrap { position: relative; z-index: 3; justify-self: center; width: min(61vw, 1040px); margin-left: -7vw; transform: translate(calc(var(--jungle-x) * -8px), calc(var(--jungle-y) * -6px)) rotate(1.5deg); filter: drop-shadow(0 22px 25px rgba(39,33,18,.28)); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.hero-stamp { position: absolute; z-index: 3; right: -2rem; top: 14%; width: 6rem; aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--ink); display: grid; place-items: center; background: var(--yellow); color: var(--ink); font-size: .62rem; font-weight: 900; transform: rotate(12deg); text-align: center; }
+.hero-star { position: absolute; fill: var(--orange); width: 5.5rem; left: -3.5rem; top: -3rem; transform: rotate(-10deg); }
+.orbit-line { position: absolute; right: -7%; bottom: -5%; width: 40%; aspect-ratio: 2; border: 2px solid var(--blue); border-top-color: transparent; border-radius: 50%; transform: rotate(-18deg); }
+.hero-note { position: absolute; left: 5vw; bottom: 6%; width: 14rem; display: flex; gap: 1rem; align-items: flex-start; font-size: .7rem; line-height: 1.7; }
+.hero-note span { font-weight: 900; color: var(--yellow); }
+.hero-note p { margin: 0; }
+.hero-collage { position: absolute; z-index: 2; inset: 0; pointer-events: none; overflow: hidden; }
+/* 入場チケット（コラージュの絵の代わり） */
+.hero-collage .ticket { position: absolute; display: flex; flex-direction: column; justify-content: center; gap: .3vw; padding: 0 1.4vw 0 2.2vw; aspect-ratio: 2.1 / 1; border: 3px solid var(--ink); border-radius: 10px; color: var(--ink); box-shadow: 8px 10px 0 rgba(25,25,22,.35); background: radial-gradient(circle at 0 50%, transparent 0 .9vw, var(--tc) .95vw); }
+.hero-collage .ticket::after { content: ''; position: absolute; top: 12%; bottom: 12%; right: 24%; border-left: 3px dashed rgba(25,25,22,.45); }
+.hero-collage .ticket small { font: 900 clamp(.45rem, .7vw, .7rem)/1 var(--sans); letter-spacing: .25em; }
+.hero-collage .ticket b { font: 700 clamp(.9rem, 1.6vw, 1.7rem)/1.1 var(--display); }
+.hero-collage .ticket i { font: 900 clamp(.4rem, .6vw, .62rem)/1 var(--sans); font-style: normal; letter-spacing: .15em; opacity: .65; }
+.ticket-yellow { --tc: var(--yellow); }
+.ticket-blue { --tc: #8fc4ff; }
+.ticket-orange { --tc: #f39a6b; }
+.hero-collage .ticket:nth-child(1) { width: 17vw; right: 1vw; top: 5.5rem; transform: rotate(9deg); }
+.hero-collage .ticket:nth-child(2) { width: 15vw; right: 2vw; bottom: 2vw; transform: rotate(-8deg); }
+.hero-collage .ticket:nth-child(3) { width: 15vw; left: -2vw; bottom: 1vw; transform: rotate(14deg); }
+.cosmic-jungle { position: absolute; z-index: 5; inset: 0; pointer-events: none; overflow: hidden; }
+.jungle-vine { position: absolute; width: 7rem; height: 72%; border: .7rem solid #144b31; border-left: 0; border-bottom: 0; border-radius: 0 100% 0 0; filter: drop-shadow(4px 5px 0 rgba(25,25,22,.35)); transform-origin: top center; }
+.jungle-vine span { position: absolute; width: 5.4rem; height: 2.7rem; border: 3px solid var(--ink); border-radius: 100% 0 100% 0; background: #42a962; }
+.jungle-vine span:nth-child(1) { top: 12%; left: -3.8rem; transform: rotate(25deg); }
+.jungle-vine span:nth-child(2) { top: 32%; right: -3.5rem; transform: rotate(160deg); background: #ead13e; }
+.jungle-vine span:nth-child(3) { top: 56%; left: -4rem; transform: rotate(8deg); background: #e95f44; }
+.jungle-vine span:nth-child(4) { top: 75%; right: -3.4rem; transform: rotate(174deg); background: #69c886; }
+.vine-left { left: -1.5rem; top: -5rem; transform: translate(calc(var(--jungle-x) * 10px), calc(var(--jungle-y) * 5px)) rotate(5deg); animation: vineSway 6s ease-in-out infinite; }
+.vine-right { right: -1rem; top: -7rem; height: 62%; transform: scaleX(-1) translate(calc(var(--jungle-x) * -14px), calc(var(--jungle-y) * 7px)) rotate(-6deg); animation: vineSwayRight 7.5s ease-in-out infinite; }
+.jungle-orbit { position: absolute; display: grid; place-items: center; border: 2px solid rgba(242,234,215,.8); border-radius: 50%; }
+.jungle-orbit::before { content: ''; position: absolute; inset: -7%; border: 2px dashed var(--yellow); border-radius: 50%; }
+.jungle-orbit .mini-planet { width: 72%; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--ink); box-shadow: inset -.9rem -.6rem 0 rgba(7,24,58,.35), 5px 6px 0 rgba(25,25,22,.4); }
+.planet-sun { background: radial-gradient(circle at 32% 30%, #fff6 0 8%, transparent 9%), repeating-linear-gradient(-20deg, var(--yellow) 0 14%, var(--orange) 14% 24%); }
+.planet-mint { background: radial-gradient(circle at 32% 30%, #fff6 0 8%, transparent 9%), radial-gradient(circle at 65% 62%, #ff7eb6 0 14%, transparent 15%), #69c886; }
+.orbit-one { width: 13vw; min-width: 130px; aspect-ratio: 1; right: 20%; top: -5%; animation: orbitFloat 16s linear infinite; transform: translate(calc(var(--jungle-x) * 20px), calc(var(--jungle-y) * 12px)); }
+.orbit-two { width: 9vw; min-width: 95px; aspect-ratio: 1; left: 33%; bottom: -4%; animation: orbitFloatReverse 20s linear infinite; }
+.jungle-moon { position: absolute; left: 4%; top: 15%; width: 5rem; aspect-ratio: 1; border-radius: 50%; background: var(--blue); border: 3px solid var(--ink); box-shadow: inset -1.3rem -.8rem 0 #08265e, 6px 7px 0 rgba(25,25,22,.3); transform: translate(calc(var(--jungle-x) * 18px), calc(var(--jungle-y) * 12px)); animation: moonPulse 4.5s ease-in-out infinite; }
+.jungle-moon i { position: absolute; width: 145%; height: 32%; left: -23%; top: 34%; border: 3px solid var(--yellow); border-radius: 50%; transform: rotate(-14deg); }
+.jungle-star { position: absolute; fill: var(--yellow); filter: drop-shadow(3px 3px 0 var(--ink)); }
+.jungle-star-a { width: 4rem; right: 4%; top: 46%; animation: starBlink 2.8s steps(2) infinite; }
+.jungle-star-b { width: 2.8rem; left: 24%; top: 9%; fill: var(--orange); animation: starBlink 3.7s 1s steps(2) infinite; }
+.jungle-comet { position: absolute; width: 9rem; height: .45rem; right: 12%; top: 18%; border-radius: 50%; background: linear-gradient(90deg, transparent, var(--paper-light)); transform: rotate(-20deg); animation: cometPass 7s 1.5s ease-in-out infinite; }
+.jungle-comet::after { content: ''; position: absolute; right: -.4rem; top: -.4rem; width: 1.2rem; aspect-ratio: 1; border-radius: 50%; background: var(--yellow); border: 2px solid var(--ink); }
+.jungle-seed { position: absolute; font-weight: 900; color: var(--yellow); text-shadow: 2px 2px var(--ink); animation: seedDrift 8s ease-in-out infinite; }
+.seed-a { left: 16%; bottom: 18%; }
+.seed-b { right: 37%; top: 14%; color: var(--orange); animation-delay: -3s; }
+.seed-c { right: 9%; bottom: 17%; animation-delay: -5s; }
+.scroll-cue { position: absolute; right: 3vw; bottom: 3%; display: flex; flex-direction: column; align-items: center; font-size: .58rem; letter-spacing: .2em; }
+.scroll-cue span { font-size: 1.6rem; margin-top: .5rem; animation: bounce 1.8s infinite; }
+
+ /* ---- トップの観覧車（地球が軸） ---- */
+/* 横長の絵用だった枠を、観覧車に合わせた大きさにする */
+.hero .hero-art-wrap { width: min(46vw, 760px); margin-left: 0; }
+.hero-ride { position: relative; aspect-ratio: 1.3 / 1; }
+.ride-wheel-wrap { position: absolute; left: 50%; top: 2%; width: 64%; aspect-ratio: 1; transform: translateX(-50%); }
+.ride-wheel { position: absolute; inset: 0; animation: wheelSpin 40s linear infinite; }
+.ride-rim { position: absolute; inset: 0; border-radius: 50%; border: .55rem solid var(--ink); box-shadow: inset 0 0 0 .45rem var(--yellow), inset 0 0 0 .8rem var(--ink), 10px 12px 0 rgba(25,25,22,.35); }
+.ride-rim::after { content: ''; position: absolute; inset: 5%; border-radius: 50%; border: 4px dotted var(--paper-light); opacity: .85; animation: bulbs 1.4s steps(2) infinite; }
+.ride-spokes i { position: absolute; left: 50%; top: 4%; bottom: 4%; width: 4px; margin-left: -2px; background: var(--ink); transform: rotate(var(--a)); }
+.ride-arm { position: absolute; left: 50%; top: 0; width: 0; height: 50%; transform-origin: 50% 100%; transform: rotate(var(--a)); }
+.ride-car { position: absolute; left: 0; top: 0; transform: rotate(calc(var(--a) * -1)); }
+.ride-car i { position: absolute; left: 0; top: 0; width: clamp(2rem, 3.6vw, 3.4rem); aspect-ratio: 1.15; translate: -50% -18%; border: 3px solid var(--ink); border-radius: 30% 30% 45% 45%; background: radial-gradient(ellipse 34% 22% at 50% 40%, var(--paper-light) 0 95%, transparent), var(--c); box-shadow: 4px 5px 0 rgba(25,25,22,.35); transform-origin: 50% 0; animation: wheelSpin 40s linear infinite reverse, carSwing 3s ease-in-out infinite; }
+.ride-car i::before { content: ''; position: absolute; left: 50%; top: -38%; width: 3px; height: 40%; margin-left: -1.5px; background: var(--ink); }
+.ride-earth { position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: .45rem solid var(--ink); overflow: hidden; background: var(--blue); box-shadow: 0 0 0 .4rem var(--yellow), 0 0 40px rgba(239,197,56,.45); }
+.ride-earth i { position: absolute; inset: 0; background: radial-gradient(ellipse 22% 16% at 30% 38%, #42a962 0 95%, transparent), radial-gradient(ellipse 16% 24% at 66% 62%, #42a962 0 95%, transparent), radial-gradient(ellipse 12% 8% at 58% 24%, var(--yellow) 0 95%, transparent), radial-gradient(ellipse 10% 14% at 22% 72%, #69c886 0 95%, transparent); background-size: 200% 100%; animation: earthTurn 14s linear infinite; }
+.ride-earth::after { content: ''; position: absolute; inset: 0; border-radius: 50%; box-shadow: inset -1.4rem -1rem 0 rgba(7,24,58,.45), inset .6rem .5rem 0 rgba(255,255,255,.18); }
+.ride-stand { position: absolute; left: 50%; top: 36%; width: 44%; height: 58%; transform: translateX(-50%); background: var(--ink); clip-path: polygon(46% 0, 54% 0, 100% 100%, 90% 100%, 50% 10%, 10% 100%, 0 100%); }
+.ride-ground { position: absolute; left: 12%; right: 12%; bottom: 3%; height: 5%; border: 3px solid var(--ink); border-radius: 50%; background: #42a962; box-shadow: 6px 8px 0 rgba(25,25,22,.35); }
+.ride-sign { position: absolute; left: 50%; bottom: 0; margin: 0; padding: .55rem 1.1rem; border: 3px solid var(--ink); background: var(--yellow); color: var(--ink); font: 900 clamp(.55rem, .9vw, .85rem)/1 var(--sans); letter-spacing: .2em; white-space: nowrap; transform: translateX(-50%) rotate(-3deg); box-shadow: 6px 6px 0 var(--ink); }
+@keyframes wheelSpin { to { rotate: 360deg; } }
+@keyframes carSwing { 0%, 100% { translate: -50% -18%; } 50% { translate: -46% -18%; } }
+@keyframes bulbs { 50% { opacity: .35; } }
+@keyframes earthTurn { to { background-position: -200% 0; } }
+
+/* ---- 作品画像の枠 ---- */
+.art-visual { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.art-visual > img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .65s ease; }
+.photo-art::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(25,25,22,.16); background: linear-gradient(105deg, rgba(255,255,255,.045), transparent 35%); }
+.placeholder-label { position: absolute; bottom: .7rem; left: .7rem; padding: .25rem .4rem; background: rgba(250,245,232,.86); color: var(--ink); font: 700 .48rem/1 var(--sans); letter-spacing: .1em; }
+
+/* ---- 世界 ---- */
+.world-section { background: var(--navy); color: var(--paper); }
+.section-intro { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 4vw; }
+.section-intro h2 { margin: 0; font: 700 clamp(2.4rem, 5vw, 5.5rem)/1.2 var(--display); }
+.section-intro h2 i { color: var(--yellow); font-style: normal; }
+.world-panel { position: relative; min-height: 100vh; overflow: hidden; padding: 9vh 7vw; display: flex; align-items: flex-end; }
+.world-number { position: absolute; right: 5vw; top: 2vh; font: 700 25vw/1 var(--display); opacity: .07; }
+.world-copy { position: relative; z-index: 4; width: 45%; padding: 3rem; background: rgba(7,24,58,.92); border-left: 2px solid var(--yellow); }
+.world-copy > p { margin: 0 0 1rem; color: var(--yellow); font-size: .7rem; font-weight: 900; letter-spacing: .3em; }
+.world-copy h3 { margin: 0 0 1rem; font: 700 clamp(2rem, 3.8vw, 4.5rem)/1.2 var(--display); }
+.world-copy > span { font-size: .8rem; opacity: .8; line-height: 1.8; }
+.scatter-text { display: inline; }
+.scatter-text > span { display: inline-block; opacity: 0; transform: translate(var(--scatter-x), var(--scatter-y)) rotate(var(--scatter-r)) scale(.65); filter: blur(5px); }
+.scatter-text > .scatter-space { width: .3em; }
+.cosmos-copy.is-visible .scatter-text > span { animation: scatterAssemble .9s cubic-bezier(.16,.85,.24,1.08) var(--scatter-delay) both; }
+.cosmos-copy.is-visible .scatter-description > span { animation-duration: .75s; }
+.cosmos-copy.is-visible .scatter-kicker > span { animation-duration: .65s; }
+.floating-art { position: absolute; box-shadow: 0 25px 50px rgba(0,0,0,.35); }
+.floating-art .art-visual { aspect-ratio: 4/5; }
+.art-one { width: 32vw; max-width: 430px; right: 15vw; top: 10vh; transform: rotate(5deg); animation: float 6s ease-in-out infinite; }
+.planet { position: absolute; border-radius: 50%; border: 2px solid rgba(242,234,215,.6); }
+.planet-one { width: 9rem; height: 9rem; right: 3vw; top: 16%; background: var(--orange); box-shadow: inset -2rem -1rem 0 rgba(25,25,22,.2); }
+.planet-one::after { content: ''; position: absolute; width: 160%; height: 30%; border: 2px solid var(--paper); border-radius: 50%; top: 33%; left: -30%; transform: rotate(-15deg); }
+.planet-two { width: 1.2rem; height: 1.2rem; left: 30%; top: 22%; background: var(--yellow); }
+.cosmos { background-image: linear-gradient(rgba(7,24,58,.89), rgba(7,24,58,.96)), url('assets/art-stars.jpg'); background-size: cover; background-position: center; }
+
+/* ---- ギャラリー ---- */
+.gallery-section { position: relative; padding: 10rem 7vw 12rem; background: radial-gradient(circle at 76% 18%, rgba(25,45,92,.13), transparent 24%), radial-gradient(circle at 12% 70%, rgba(69,30,81,.1), transparent 28%), linear-gradient(rgba(0,2,8,.97), rgba(0,1,6,.995)), url('assets/art-cosmos.jpg') center/cover scroll; color: var(--paper); overflow: hidden; isolation: isolate; }
+.gallery-section::before { content: ''; position: absolute; z-index: 0; inset: -12%; background-image: radial-gradient(circle, rgba(255,255,255,.88) 0 .75px, transparent 1.25px), radial-gradient(circle, rgba(112,175,255,.68) 0 .65px, transparent 1.2px), radial-gradient(circle, rgba(239,197,56,.7) 0 .7px, transparent 1.25px), radial-gradient(circle, rgba(255,255,255,.42) 0 .5px, transparent 1px); background-size: 71px 71px, 113px 113px, 167px 167px, 43px 43px; background-position: 9px 17px, 41px 63px, 83px 24px, 17px 31px; opacity: .56; pointer-events: none; animation: galleryStarsDrift 34s linear infinite; }
+.gallery-section::after { content: ''; position: absolute; z-index: 0; width: 145%; height: 30rem; left: -22%; top: 43%; background: radial-gradient(ellipse at center, rgba(242,234,215,.11) 0, rgba(50,94,158,.1) 18%, rgba(68,37,99,.08) 37%, rgba(7,24,58,0) 70%); transform: rotate(-11deg); filter: blur(13px); pointer-events: none; animation: galaxyBreath 12s ease-in-out infinite; }
+.gallery-heading { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr .5fr .7fr; align-items: end; gap: 3rem; margin-bottom: 4rem; }
+.gallery-heading .eyebrow { grid-column: 1/-1; }
+.gallery-heading h2 { margin: 0; font: 900 clamp(4rem, 9vw, 10rem)/.72 var(--sans); letter-spacing: -.1em; color: var(--paper-light); text-shadow: 5px 6px 0 rgba(7,24,58,.42); }
+.jp-title { margin: 0; font: 700 clamp(1.8rem, 3vw, 3.5rem)/1.2 var(--display); }
+.gallery-description { margin: 0; font-size: .75rem; line-height: 2; color: rgba(242,234,215,.78); }
+.gallery-description strong { display: block; margin-bottom: .65rem; color: var(--yellow); font: 700 clamp(1rem, 1.55vw, 1.45rem)/1.5 var(--display); }
+.gallery-description span { display: block; }
+.ring-gallery { position: relative; z-index: 2; margin: -1rem -7vw -5rem; padding: 2rem 0 4rem; overflow: hidden; }
+.ring-gallery::before { content: 'MILKY WAY OF ART'; position: absolute; left: -1rem; top: 1rem; color: rgba(242,234,215,.045); font: 900 9vw/1 var(--sans); white-space: nowrap; letter-spacing: -.08em; pointer-events: none; }
+.ring-gallery-action { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding: 0 4vw 1.5rem; color: var(--paper); }
+.ring-gallery-action p { margin: 0; font-size: .68rem; font-weight: 900; letter-spacing: .14em; }
+.ring-gallery-action p small { display: block; margin-top: .45rem; font-size: .6rem; font-weight: 500; letter-spacing: .05em; opacity: .55; }
+.ring-gallery-action button { padding: .9rem 1.2rem; border: 1px solid var(--paper); background: var(--yellow); color: var(--ink); font-size: .72rem; font-weight: 900; cursor: pointer; box-shadow: 5px 5px 0 var(--paper); transition: transform .2s, box-shadow .2s; }
+.ring-gallery-action button:hover { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--paper); }
+
+/* 3Dリング：カードの位置と向きは main.js が毎フレーム決める */
+.ring-carousel { --ring-radius: 390px; --ring-scale: 1; --ring-tilt: 14deg; --ring-roll: -9deg; --ring-glow: var(--yellow); position: relative; height: 625px; perspective: 1500px; perspective-origin: 50% 40%; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; outline: none; }
+.ring-carousel.is-dragging { cursor: grabbing; }
+.ring-carousel:focus-visible { outline: 2px dashed var(--yellow); outline-offset: -1rem; }
+.ring-stage { position: absolute; left: 50%; top: 48%; width: 0; height: 0; transform-style: preserve-3d; transform: scale(var(--ring-scale)) rotateZ(var(--ring-roll)) rotateX(calc(var(--ring-tilt) * -1)); }
+.ring-card { position: absolute; left: -120px; top: -149px; width: 240px; height: 298px; padding: 0; border: 0; background: none; cursor: pointer; transform-style: preserve-3d; will-change: transform, opacity; }
+.ring-card-face, .ring-card-back { position: absolute; inset: 0; overflow: hidden; opacity: var(--ring-fade, 1); border: 3px solid var(--paper-light); }
+.ring-card-back, .ring-card.is-back .ring-card-face { visibility: hidden; }
+.ring-card.is-back .ring-card-back { visibility: visible; }
+.ring-card-face { background: var(--navy); box-shadow: 0 18px 34px rgba(0,0,0,.45); transition: box-shadow .4s, border-color .4s; }
+.ring-card-face img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+.ring-card-caption { position: absolute; inset: auto 0 0; display: flex; flex-direction: column; gap: .3rem; padding: 2.2rem .9rem .8rem; text-align: left; color: var(--paper-light); background: linear-gradient(transparent, rgba(4,13,35,.88)); }
+.ring-card-caption small { font-size: .48rem; font-weight: 700; letter-spacing: .14em; opacity: .7; }
+.ring-card-caption b { font: 700 1rem/1 var(--display); letter-spacing: .04em; }
+.ring-card-back { background: radial-gradient(circle at 50% 45%, rgba(239,197,56,.3) 0 8%, transparent 9%), repeating-radial-gradient(circle at 50% 45%, transparent 0 18px, rgba(242,234,215,.08) 19px 20px), #0b1a3c; border-color: rgba(242,234,215,.35); }
+.ring-card.is-front .ring-card-face { border-color: var(--ring-glow); box-shadow: 0 0 0 2px var(--ink), 0 0 42px color-mix(in srgb, var(--ring-glow) 70%, transparent), 0 22px 40px rgba(0,0,0,.5); }
+
+/* ---- 活動：闇に浮かぶ光の扉（手前に4つの扉、地平線に遠くの扉） ---- */
+.attractions-section { position: relative; padding: 9rem 6vw 8rem; background: radial-gradient(ellipse at 50% 70%, rgba(40,60,140,.28), transparent 60%), #03050d; color: var(--paper-light); overflow: hidden; }
+.portal-head { display: grid; grid-template-columns: 1fr minmax(260px, 430px); align-items: end; gap: 3rem; }
+.portal-head .eyebrow { color: var(--yellow); }
+.portal-head h2 { margin: 0; font: 700 clamp(2.4rem, 5vw, 4.8rem)/1.15 var(--display); }
+.portal-head > p { margin: 0; color: rgba(250,245,232,.7); font-size: .86rem; line-height: 2; }
+.portal-head small { display: block; margin-top: .7rem; color: var(--yellow); font-size: .72rem; letter-spacing: .06em; }
+
+.door-stage { position: relative; height: 620px; margin-top: 3.5rem; border-radius: 6px; overflow: hidden; background: linear-gradient(#04060f 0%, #0a1130 56%, #141d48 58%, #070b1c 72%, #03050d 100%); }
+/* 空の星 */
+.door-stage::before { content: ''; position: absolute; inset: 0 0 42%; background-image: radial-gradient(circle, rgba(250,245,232,.8) 0 1px, transparent 1.5px), radial-gradient(circle, rgba(239,197,56,.7) 0 1px, transparent 1.5px); background-size: 83px 83px, 131px 131px; background-position: 11px 23px, 57px 71px; opacity: .6; animation: twinkle 5s ease-in-out infinite; pointer-events: none; }
+/* 床：地平線から手前へ広がる線 */
+.door-stage::after { content: ''; position: absolute; left: -50%; right: -50%; top: 58%; bottom: 0; background-image: linear-gradient(90deg, rgba(150,180,255,.12) 1px, transparent 1px), linear-gradient(rgba(150,180,255,.1) 1px, transparent 1px); background-size: 90px 100%, 100% 46px; transform: perspective(400px) rotateX(58deg); transform-origin: center top; -webkit-mask-image: linear-gradient(#000, transparent 90%); mask-image: linear-gradient(#000, transparent 90%); pointer-events: none; }
+.door-horizon { position: absolute; z-index: 1; left: 0; right: 0; top: 58%; height: 1px; background: linear-gradient(90deg, transparent, rgba(250,245,232,.7), transparent); box-shadow: 0 0 24px 4px rgba(120,150,255,.35); }
+
+/* 遠くの扉（JS が --x・--w・--blur・--c を入れる） */
+.far-doors { position: absolute; z-index: 1; inset: 0; }
+.far-door { position: absolute; left: var(--x); bottom: 42%; width: var(--w); height: calc(var(--w) * 1.65); padding: 0; transform: translateX(-50%); border: 1px solid rgba(250,245,232,.45); background: linear-gradient(#0d1430, #060914); opacity: .55; filter: blur(var(--blur)); cursor: pointer; transition: opacity .4s, filter .4s, box-shadow .4s, background .6s; }
+.far-door::after { content: ''; position: absolute; right: 18%; top: 54%; width: 3px; height: 3px; border-radius: 50%; background: rgba(250,245,232,.7); }
+.far-door:hover, .far-door:focus-visible { opacity: 1; filter: none; box-shadow: 0 0 14px rgba(250,245,232,.35); }
+.far-door.is-open { opacity: 1; filter: none; background: radial-gradient(ellipse at 50% 60%, #fff, var(--c) 45%, transparent 100%); border-color: #fff; box-shadow: 0 0 20px var(--c), 0 0 50px var(--c); }
+
+/* 手前の扉 */
+.near-doors { position: absolute; z-index: 2; left: 0; right: 0; bottom: 13%; display: flex; justify-content: center; align-items: flex-end; gap: 6vw; pointer-events: none; /* 並びの余白が遠くの扉のクリックを取らないように */ }
+.light-door { position: relative; width: 150px; height: 250px; padding: 0; border: 0; background: none; color: var(--paper-light); cursor: pointer; pointer-events: auto; }
+.light-door-frame { position: absolute; inset: 0; border: 2px solid var(--c); box-shadow: 0 0 16px var(--c), inset 0 0 16px color-mix(in srgb, var(--c) 35%, transparent); perspective: 700px; -webkit-box-reflect: below 4px linear-gradient(transparent 60%, rgba(255,255,255,.22)); animation: doorGlow 4s ease-in-out infinite; }
+.light-door:nth-child(2) .light-door-frame { animation-delay: -1s; }
+.light-door:nth-child(3) .light-door-frame { animation-delay: -2s; }
+.light-door:nth-child(4) .light-door-frame { animation-delay: -3s; }
+.light-door-inside { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 58%, #fff 0%, var(--c) 32%, color-mix(in srgb, var(--c) 30%, transparent) 70%, transparent 100%); opacity: .12; transition: opacity .8s ease; }
+.light-door-leaf { position: absolute; inset: 0; background: linear-gradient(160deg, #161d3a, #070a17); border-right: 1px solid color-mix(in srgb, var(--c) 50%, transparent); transform-origin: left center; transition: transform 1s cubic-bezier(.2,.8,.2,1); }
+.light-door-leaf i, .light-door-leaf::before { content: ''; position: absolute; left: 16%; right: 16%; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); }
+.light-door-leaf i { top: 10%; height: 34%; }
+.light-door-leaf::before { top: 54%; height: 34%; }
+.light-door-leaf::after { content: ''; position: absolute; right: 10%; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.light-door-beam { position: absolute; left: -45%; right: -45%; top: 100%; height: 150px; background: linear-gradient(color-mix(in srgb, var(--c) 70%, transparent), transparent); clip-path: polygon(33% 0, 67% 0, 100% 100%, 0 100%); opacity: 0; filter: blur(3px); mix-blend-mode: screen; pointer-events: none; transition: opacity .9s ease; }
+.light-door-label { position: absolute; left: -2rem; right: -2rem; bottom: calc(100% + 1rem); display: flex; flex-direction: column; align-items: center; gap: .15rem; pointer-events: none; }
+.light-door-label i { font-size: .6rem; font-style: normal; font-weight: 900; letter-spacing: .2em; color: var(--c); }
+.light-door-label b { font: 700 1.25rem/1.3 var(--display); text-shadow: 0 0 14px rgba(0,0,0,.8); }
+.light-door-label small { font-size: .52rem; font-weight: 900; letter-spacing: .26em; opacity: .55; }
+.light-door:hover .light-door-leaf, .light-door:focus-visible .light-door-leaf { transform: rotateY(-28deg); }
+.light-door:hover .light-door-inside, .light-door:focus-visible .light-door-inside { opacity: .55; }
+.light-door:hover .light-door-beam { opacity: .18; }
+.light-door.is-open .light-door-leaf { transform: rotateY(-100deg); }
+.light-door.is-open .light-door-inside { opacity: 1; }
+.light-door.is-open .light-door-beam { opacity: .45; }
+.light-door.is-open .light-door-frame { box-shadow: 0 0 26px var(--c), 0 0 70px var(--c), inset 0 0 20px var(--c); }
+@keyframes doorGlow { 50% { box-shadow: 0 0 26px var(--c), inset 0 0 22px color-mix(in srgb, var(--c) 45%, transparent); } }
+
+/* 画面下のカード（JS が body の直下へ移す）。--c は開いた扉の色 */
+.door-note { --c: var(--yellow); position: fixed; z-index: 120; left: 50%; bottom: 1.2rem; width: min(460px, 90vw); padding: 1.4rem 3rem 1.4rem 1.6rem; border: 1px solid rgba(250,245,232,.18); border-top: 3px solid var(--c); border-radius: 14px; background: rgba(8,12,30,.82); color: var(--paper-light); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 -8px 60px color-mix(in srgb, var(--c) 35%, transparent), 0 20px 40px rgba(0,0,0,.5); transform: translateX(-50%); animation: noteIn .5s cubic-bezier(.2,.8,.2,1); }
+.door-note > button { position: absolute; top: .7rem; right: .8rem; padding: 0; border: 0; background: none; color: var(--paper-light); font-size: 1.4rem; line-height: 1; opacity: .7; cursor: pointer; }
+.door-note > span { color: var(--c); font-size: .58rem; font-weight: 900; letter-spacing: .2em; }
+.door-note h3 { margin: .4rem 0 .5rem; font: 700 1.5rem/1.3 var(--display); }
+.door-note strong { display: block; font: 700 1rem/1.7 var(--display); }
+.door-note p { margin: .45rem 0 0; color: rgba(250,245,232,.7); font-size: .74rem; line-height: 1.8; }
+.door-note div { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .7rem; }
+.door-note small { padding: .15rem .55rem; border: 1px solid color-mix(in srgb, var(--c) 60%, transparent); border-radius: 999px; color: var(--c); font-size: .58rem; }
+@keyframes noteIn { from { opacity: 0; transform: translateX(-50%) translateY(16px); } }
+
+/* ---- 考え方 ---- */
+.philosophy-section { --g: min(72vw, 780px); position: relative; min-height: 100vh; display: grid; place-items: center; padding: 11rem 6vw 13rem; overflow: hidden; text-align: center; color: var(--paper-light); background: radial-gradient(circle at 50% 45%, #10264e, #050d22 60%, #030817); }
+
+/* 回る地球儀：経線6本と緯線5本 */
+.philo-globe { position: absolute; left: 50%; top: 47%; width: var(--g); aspect-ratio: 1; transform: translate(-50%, -50%); perspective: 1800px; pointer-events: none; }
+.globe { position: absolute; inset: 0; transform-style: preserve-3d; animation: globeSpin 46s linear infinite; }
+.globe .mer { position: absolute; inset: 0; border: 1px solid rgba(239,197,56,.28); border-radius: 50%; transform: rotateY(calc(var(--i) * 30deg)); }
+.globe .par { position: absolute; left: 50%; top: 50%; width: calc(var(--s) * var(--g)); aspect-ratio: 1; border: 1px solid rgba(110,170,255,.26); border-radius: 50%; transform: translate(-50%, -50%) translateY(calc(var(--f) * var(--g) / 2)) rotateX(90deg); }
+.globe-core { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle, rgba(239,197,56,.16), rgba(22,71,152,.12) 45%, transparent 70%); filter: blur(10px); animation: coreBreath 7s ease-in-out infinite; }
+
+/* 見出し：1文字ずつ、触れると逃げる・押すと跳ねる */
+.philo-copy { position: relative; z-index: 2; }
+.philo-copy .eyebrow { color: var(--yellow); }
+.kinetic { margin: 0; font: 700 clamp(3.2rem, 8vw, 8.4rem)/1.12 var(--display); letter-spacing: -.02em; user-select: none; -webkit-user-select: none; }
+.k-line { display: block; white-space: nowrap; }
+.k-accent { color: var(--orange); }
+.k-char { display: inline-block; cursor: pointer; will-change: translate; text-shadow: 0 6px 30px rgba(0,0,0,.45); }
+.k-char.is-pop { animation: kPop .7s cubic-bezier(.2,1.6,.4,1); }
+.k-accent::after { content: ''; display: block; height: .06em; margin: -.04em auto 0; width: 0; background: var(--orange); border-radius: 1em; transition: width 1.2s cubic-bezier(.2,.8,.2,1) .4s; }
+.philosophy-section.is-in .k-accent::after { width: 92%; }
+.philo-hint { margin: 1.4rem 0 0; color: var(--yellow); font-size: .66rem; font-weight: 900; letter-spacing: .3em; animation: hintBlink 2.4s ease-in-out infinite; }
+@keyframes kPop { 30% { transform: translateY(-.35em) rotate(-14deg) scale(1.22); } 65% { transform: translateY(.04em) rotate(8deg) scale(.96); } }
+@keyframes hintBlink { 50% { opacity: .35; } }
+
+/* 本文：マーカーを引くように1行ずつ */
+.philo-lines { margin: 2.4rem 0 1.4rem; font-size: clamp(.95rem, 1.4vw, 1.2rem); font-weight: 700; line-height: 1.5; }
+.philo-lines span { display: block; width: fit-content; margin: .55em auto; padding: 0 .2em; background: linear-gradient(transparent 60%, rgba(239,197,56,.38) 60%) no-repeat left / 0% 100%; transition: background-size 1s cubic-bezier(.2,.8,.2,1); }
+.philo-lines.is-in span { background-size: 100% 100%; }
+.philo-lines span:nth-child(2) { transition-delay: .25s; }
+.philo-lines span:nth-child(3) { transition-delay: .5s; }
+.philo-lines span:nth-child(4) { transition-delay: .75s; }
+.philo-copy .note { opacity: .45; font-size: .62rem; }
+
+/* 回るバッジ */
+.philo-badge { position: absolute; z-index: 2; right: 6vw; bottom: 12rem; width: 210px; aspect-ratio: 1; margin: 0; display: grid; place-items: center; }
+.philo-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; animation: badgeSpin 24s linear infinite; }
+.philo-badge text { fill: var(--yellow); font: 700 13.5px var(--display); letter-spacing: .12em; }
+.philo-badge::before { content: ''; position: absolute; inset: 22%; border-radius: 50%; border: 1px dashed rgba(250,245,232,.4); }
+.philo-badge figcaption { position: relative; font-size: .6rem; line-height: 1.7; color: rgba(250,245,232,.8); }
+.philo-badge figcaption b { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* 下端を流れる文字 */
+.giant-type { position: absolute; left: 0; bottom: -1.5rem; display: flex; white-space: nowrap; color: var(--blue); opacity: .16; font: 900 10vw/1 var(--sans); letter-spacing: -.06em; animation: marquee 50s linear infinite; pointer-events: none; }
+@keyframes globeSpin { from { transform: rotateX(-16deg) rotateY(0); } to { transform: rotateX(-16deg) rotateY(360deg); } }
+@keyframes coreBreath { 50% { opacity: .55; transform: scale(1.06); } }
+@keyframes badgeSpin { to { transform: rotate(360deg); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.philosophy-section:not(.is-active) *, .philosophy-section:not(.is-active) *::after { animation-play-state: paused !important; }
+
+/* ---- 紙芝居 ---- */
+.kamishibai-section { position: relative; padding: 9rem 5vw; background: #03130d url('assets/jungle-bg.jpg') center/cover scroll; color: var(--paper-light); min-height: 100vh; overflow: hidden; isolation: isolate; }
+.kamishibai-section::before { content: ''; position: absolute; z-index: 0; inset: 0; background: linear-gradient(180deg, rgba(1,12,9,.52), rgba(1,11,8,.2) 42%, rgba(1,8,8,.84)), linear-gradient(90deg, rgba(0,12,8,.74), transparent 30%, transparent 70%, rgba(0,12,8,.74)); pointer-events: none; }
+.kamishibai-heading { position: relative; z-index: 3; text-align: center; }
+.kamishibai-heading h2 { margin: 0 0 4rem; font: 700 clamp(2.6rem, 5vw, 5rem)/1 var(--display); }
+.story-stage { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; gap: 3vw; }
+.wood-frame { position: relative; width: min(65vw, 900px); padding: 1.6rem; background: url('assets/wood-texture.jpg') center 48%/cover; box-shadow: 0 0 0 2px rgba(25,14,7,.88), 0 0 0 7px rgba(10,34,20,.48), 14px 18px 35px rgba(0,0,0,.6); }
+.wood-frame::before { content: ''; position: absolute; inset: .55rem; border: 1px solid rgba(226,188,118,.22); box-shadow: inset 0 0 20px rgba(0,0,0,.35); pointer-events: none; }
+.story-page { display: grid; grid-template-columns: 1.15fr .85fr; min-height: 540px; background: var(--paper-light); border: 4px solid #4f2d19; animation: pageIn .5s ease; }
+.story-page > .art-visual { min-height: 100%; }
+.story-caption { position: relative; padding: 3.5rem 3rem 3rem; display: flex; flex-direction: column; justify-content: center; color: var(--ink); background: linear-gradient(90deg, rgba(80,52,26,.08), transparent 10%), repeating-linear-gradient(0deg, transparent 0 29px, rgba(42,71,98,.07) 29px 30px), var(--paper-light); box-shadow: inset 12px 0 24px rgba(69,43,22,.09); }
+.story-caption::before { content: ''; position: absolute; inset: 1.2rem; border: 1px solid rgba(25,25,22,.2); border-radius: 48% 52% 45% 55%/4% 5% 4% 5%; pointer-events: none; }
+.story-caption span { position: relative; color: var(--orange); font-size: .58rem; font-weight: 900; letter-spacing: .2em; }
+.story-caption h3 { position: relative; margin: 1.2rem 0 1.5rem; font: 700 clamp(1.65rem, 2.8vw, 2.8rem)/1.35 var(--display); text-wrap: balance; }
+.story-caption p { position: relative; margin: 0; white-space: pre-line; font: 700 clamp(.92rem, 1.35vw, 1.15rem)/2.05 var(--display); }
+.story-caption p::first-letter { color: var(--orange); font-size: 1.45em; }
+.story-caption small { position: absolute; right: 2.2rem; bottom: 1.7rem; font-size: .55rem; font-weight: 900; letter-spacing: .15em; opacity: .5; }
+.story-spark { position: absolute; right: 2rem; top: 2rem; color: var(--yellow); font-size: 2rem; font-style: normal; transform: rotate(12deg); text-shadow: 1px 1px 0 var(--ink); }
+.story-arrow { display: grid; place-items: center; width: 4.5rem; height: 4.5rem; flex: 0 0 auto; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper-light); color: var(--ink); cursor: pointer; transition: transform .2s, background .2s; }
+.story-arrow:hover { transform: scale(1.1) rotate(-5deg); background: var(--yellow); }
+.story-arrow svg { width: 60%; }
+.story-arrow path, .primary-action path, .modal-copy a path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.flip { transform: scaleX(-1); }
+.story-pagination { position: relative; z-index: 3; display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2.5rem; font-size: .65rem; font-weight: 900; }
+.story-pagination i { width: 5rem; height: 2px; background: var(--paper-light); }
+.kamishibai-jungle { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
+.jungle-photo-rays { position: absolute; width: 68%; height: 72%; left: 16%; top: 15%; object-fit: cover; object-position: center 42%; opacity: .48; mix-blend-mode: screen; -webkit-mask-image: radial-gradient(ellipse at center, #000 25%, transparent 72%); mask-image: radial-gradient(ellipse at center, #000 25%, transparent 72%); animation: photoBreathe 12s ease-in-out infinite; }
+.jungle-photo-foliage { position: absolute; width: 47%; height: 100%; top: 0; object-fit: cover; opacity: .92; filter: brightness(.48) saturate(1.2); }
+.foliage-left { left: -16%; object-position: 24% center; -webkit-mask-image: linear-gradient(90deg, #000 42%, transparent 100%); mask-image: linear-gradient(90deg, #000 42%, transparent 100%); transform-origin: left bottom; animation: foliageDriftLeft 11s ease-in-out infinite; }
+.foliage-right { right: -16%; object-position: 76% center; -webkit-mask-image: linear-gradient(-90deg, #000 42%, transparent 100%); mask-image: linear-gradient(-90deg, #000 42%, transparent 100%); transform: scaleX(-1); transform-origin: right bottom; animation: foliageDriftRight 13s -3s ease-in-out infinite; }
+.jungle-photo-credit { position: relative; z-index: 3; margin: 3rem 0 -6rem; text-align: center; font-size: .5rem; letter-spacing: .04em; opacity: .42; }
+.jungle-photo-credit a { border-bottom: 1px solid currentColor; }
+
+/* ---- コンタクト・フッター ---- */
+.contact-section { position: relative; padding: 12rem 5vw 10rem; text-align: center; background: linear-gradient(rgba(18,15,42,.82), rgba(7,24,58,.94)), url('assets/art-portrait.jpg') center 42%/cover; color: var(--paper-light); overflow: hidden; }
+.contact-section h2 { position: relative; z-index: 2; margin: 0 auto 4rem; font: 700 clamp(3rem, 7vw, 7rem)/1.18 var(--display); }
+.contact-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.primary-action, .secondary-action { width: min(100%, 22rem); min-height: 5rem; padding: 1rem 1.5rem; border: 2px solid var(--ink); background: var(--paper-light); color: var(--ink); display: flex; align-items: center; justify-content: space-between; font-weight: 900; cursor: pointer; box-shadow: 6px 6px 0 var(--ink); transition: transform .2s, box-shadow .2s; }
+.primary-action:hover { transform: translate(4px,4px); box-shadow: 2px 2px 0 var(--ink); }
+.primary-action svg { width: 3rem; }
+.secondary-action { opacity: .62; cursor: not-allowed; flex-direction: column; justify-content: center; }
+.secondary-action small { margin-top: .4rem; font-size: .5rem; letter-spacing: .15em; }
+.back-top { display: inline-block; margin-top: 4rem; font-size: .72rem; font-weight: 700; border-bottom: 1px solid; }
+.contact-star { position: absolute; fill: var(--yellow); }
+.star-left { width: 11vw; left: 5%; top: 20%; transform: rotate(-15deg); }
+.star-right { width: 7vw; right: 8%; bottom: 18%; transform: rotate(12deg); }
+
+footer { padding: 4rem 5vw 2rem; background: var(--ink); color: var(--paper); display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; gap: 2rem; }
+.footer-logo { color: var(--paper); }
+footer > p { margin: 0; text-align: center; font: 700 1.4rem/1 var(--display); }
+.footer-links { display: flex; flex-direction: column; align-items: flex-end; gap: .8rem; font-size: .65rem; font-weight: 700; }
+footer > small { grid-column: 1/-1; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba(242,234,215,.2); text-align: center; font-size: .5rem; letter-spacing: .15em; opacity: .6; }
+
+/* ---- 作品の拡大表示・メニュー・カーソル ---- */
+.art-modal { position: fixed; z-index: 100; inset: 0; background: rgba(7,24,58,.96); color: var(--paper); padding: 6vh 6vw; display: grid; grid-template-columns: minmax(0,1.1fr) minmax(300px,.65fr); align-items: center; gap: 6vw; animation: modalIn .35s ease; }
+.modal-close { position: absolute; right: 2rem; top: 2rem; width: 3.5rem; height: 3.5rem; border: 1px solid var(--paper); border-radius: 50%; background: transparent; color: var(--paper); font-size: 2rem; cursor: pointer; }
+.modal-art { height: 88vh; display: grid; place-items: center; }
+.modal-art .art-visual { width: auto; max-width: 100%; aspect-ratio: 4/5; }
+.modal-copy > p { color: var(--yellow); font-size: .7rem; font-weight: 900; letter-spacing: .2em; }
+.modal-copy h2 { margin: 1rem 0 1.5rem; font: 700 clamp(2rem, 4vw, 4rem)/1.2 var(--display); }
+.modal-copy > span { display: block; font-size: .8rem; line-height: 2; opacity: .7; }
+.modal-copy a { margin-top: 3rem; padding: 1.2rem 0; border-bottom: 1px solid var(--paper); display: flex; align-items: center; justify-content: space-between; font-weight: 700; }
+.modal-copy a svg { width: 3rem; }
+
+.mobile-menu { position: fixed; z-index: 90; inset: 0; background: var(--yellow); color: var(--ink); display: flex; flex-direction: column; justify-content: center; padding: 10vw; }
+.mobile-menu > a { border-bottom: 1px solid var(--ink); padding: 1rem 0; font: 700 2rem/1.2 var(--display); }
+.mobile-menu > a span { font: 700 .55rem/1 var(--sans); margin-right: 1rem; }
+.menu-close { position: absolute; right: 1.5rem; top: 1.5rem; background: none; border: 0; font-size: 3rem; cursor: pointer; }
+@keyframes bounce { 50% { transform: translateY(.5rem); } }
+@keyframes float { 50% { transform: rotate(3deg) translateY(-1.5rem); } }
+@keyframes pageIn { from { opacity: 0; transform: translateX(1.5rem) rotateY(-3deg); } }
+@keyframes modalIn { from { opacity: 0; transform: scale(.98); } }
+@keyframes vineSway { 50% { transform: translate(calc(var(--jungle-x) * 10px), calc(var(--jungle-y) * 5px)) rotate(-2deg); } }
+@keyframes vineSwayRight { 50% { transform: scaleX(-1) translate(calc(var(--jungle-x) * -14px), calc(var(--jungle-y) * 7px)) rotate(2deg); } }
+@keyframes orbitFloat { to { transform: translate(calc(var(--jungle-x) * 20px), calc(var(--jungle-y) * 12px)) rotate(360deg); } }
+@keyframes orbitFloatReverse { to { transform: rotate(-360deg); } }
+@keyframes counterSpin { to { transform: rotate(-360deg); } }
+@keyframes moonPulse { 50% { transform: translate(calc(var(--jungle-x) * 18px), calc(var(--jungle-y) * 12px)) scale(1.09) rotate(5deg); } }
+@keyframes starBlink { 50% { transform: scale(.6) rotate(20deg); opacity: .65; } }
+@keyframes cometPass { 0%, 65% { opacity: 0; transform: translate(8rem,-4rem) rotate(-20deg); } 75% { opacity: 1; } 100% { opacity: 0; transform: translate(-35rem,13rem) rotate(-20deg); } }
+@keyframes seedDrift { 50% { transform: translate(1.2rem,-2.5rem) rotate(160deg); } }
+@keyframes scatterAssemble { 0% { opacity: 0; transform: translate(var(--scatter-x), var(--scatter-y)) rotate(var(--scatter-r)) scale(.65); filter: blur(5px); } 65% { opacity: 1; filter: blur(0); } 82% { transform: translate(2px,-2px) rotate(-1deg) scale(1.04); } 100% { opacity: 1; transform: translate(0,0) rotate(0) scale(1); filter: blur(0); } }
+@keyframes heroTitleFloat { 0%, 100% { transform: translate(0,0) rotate(-.6deg); } 35% { transform: translate(.45rem,-.8rem) rotate(.5deg); } 70% { transform: translate(-.35rem,.3rem) rotate(-.15deg); } }
+@keyframes heroTitleAccentFloat { 0%, 100% { transform: translate(0,0) rotate(0); } 40% { transform: translate(-.25rem,.45rem) rotate(-.8deg); } 72% { transform: translate(.35rem,-.25rem) rotate(.45deg); } }
+@keyframes photoBreathe { 50% { transform: scale(1.035) translateY(-.6rem); opacity: .58; } }
+@keyframes foliageDriftLeft { 50% { transform: scale(1.025) rotate(.6deg); } }
+@keyframes foliageDriftRight { 50% { transform: scaleX(-1) scale(1.025) rotate(.6deg); } }
+@keyframes galleryStarsDrift { from { transform: translate3d(0,0,0) rotate(0); } to { transform: translate3d(5%,3%,0) rotate(.8deg); } }
+@keyframes galaxyBreath { 50% { opacity: .62; transform: rotate(-10deg) scale(1.04); } }
+
+/* ---- タブレット ---- */
+@media (max-width: 900px) {
+  .desktop-nav { display: none; }
+  .menu-button { display: flex; }
+  .hero { grid-template-columns: 1fr; padding: 8rem 7vw 8rem; align-content: center; gap: 3rem; }
+  .hero::after { background: linear-gradient(rgba(4,13,35,.88), rgba(4,13,35,.38)); }
+  .hero-copy { width: min(74vw, 560px); padding-left: 0; }
+  .hero .hero-art-wrap { width: min(82vw, 700px); justify-self: end; margin-left: -5vw; }
+  .jungle-vine { opacity: .8; }
+  .orbit-one { right: -4%; }
+  .orbit-two { left: 10%; }
+  .hero-note { display: none; }
+  .world-copy { width: 65%; }
+  .art-one { width: 48vw; right: 7vw; }
+  .gallery-heading { grid-template-columns: 1fr 1fr; }
+  .gallery-heading h2 { grid-column: 1/-1; }
+  .gallery-description { grid-column: 2; }
+  .ring-carousel { --ring-scale: .82; height: 560px; }
+  .portal-head { grid-template-columns: 1fr; gap: 1.5rem; }
+  .near-doors { gap: 3vw; }
+  .light-door { width: 120px; height: 200px; }
+  .story-page { min-height: 400px; }
+}
+
+/* ---- スマホ ---- */
+@media (max-width: 640px) {
+  .site-header { padding: 1.2rem 5vw; }
+  .logo strong { font-size: 1.45rem; }
+  .hero { min-height: 920px; padding: 7rem 5vw 5rem; display: block; background-position: 62% center; }
+  .hero-copy { width: 92%; padding: 1.5rem; margin-bottom: 4rem; }
+  .hero h1 { font-size: 3.65rem; }
+  .hero .hero-art-wrap { width: 92vw; margin-left: auto; margin-right: -5vw; }
+  .hero-collage .ticket:nth-child(1) { width: 34vw; right: -4vw; top: 5rem; }
+  .hero-collage .ticket:nth-child(2) { width: 32vw; right: -3vw; bottom: 1rem; }
+  .hero-collage .ticket:nth-child(3) { width: 32vw; left: -6vw; bottom: 3rem; }
+  .jungle-vine { width: 4rem; height: 48%; }
+  .vine-left { left: -3rem; }
+  .vine-right { right: -3rem; }
+  .orbit-one { width: 28vw; min-width: 0; top: 1%; right: -10%; }
+  .orbit-two { width: 22vw; min-width: 0; left: 3%; bottom: 1%; }
+  .jungle-moon { width: 3.8rem; left: 2%; top: 20%; }
+  .jungle-star-a { right: 3%; top: 55%; }
+  .jungle-star-b { left: 45%; top: 5%; }
+  .hero-stamp { right: -.5rem; }
+  .hero-star { width: 4rem; left: -1.5rem; }
+  .scroll-cue { right: auto; left: 6vw; bottom: 2rem; align-items: flex-start; }
+  .section-intro { min-height: 60vh; }
+  .world-panel { min-height: 850px; padding: 4rem 6vw; align-items: flex-end; }
+  .world-copy { width: 100%; padding: 2rem; }
+  .world-copy h3 { font-size: 2rem; }
+  .art-one { width: 68vw; right: 9vw; top: 10vh; }
+  .planet-one { width: 5rem; height: 5rem; }
+  .gallery-section { padding: 7rem 6vw; }
+  .gallery-heading { display: block; margin-bottom: 4rem; }
+  .gallery-heading h2 { font-size: 4.7rem; margin-bottom: 2rem; }
+  .gallery-description { margin-top: 1.5rem; }
+  .ring-gallery { margin: 0 -6vw -4rem; }
+  .ring-carousel { --ring-scale: .58; height: 430px; }
+  .ring-gallery-action { align-items: stretch; flex-direction: column; padding: 0 1.5rem 1.5rem; }
+  .ring-gallery-action button { min-height: 3.5rem; }
+  .attractions-section { padding: 6rem 5vw; }
+  .door-stage { height: 760px; margin-top: 2.5rem; background: linear-gradient(#04060f 0%, #0a1130 18%, #141d48 20%, #070b1c 40%, #03050d 100%); }
+  .door-stage::after, .door-horizon { top: 20%; }
+  .door-stage::before { bottom: 80%; }
+  .far-doors .far-door { bottom: 80%; }
+  .near-doors { bottom: 5%; display: grid; grid-template-columns: repeat(2, auto); justify-content: center; gap: 5.5rem 2.6rem; }
+  .light-door { width: 104px; height: 170px; }
+  .light-door-label b { font-size: 1.05rem; }
+  .light-door-beam { height: 70px; }
+  .philosophy-section { --g: 130vw; padding: 8rem 5vw 7rem; }
+  .kinetic { font-size: 3.1rem; }
+  .philo-lines { font-size: .9rem; }
+  .philo-badge { position: relative; right: auto; bottom: auto; width: 180px; margin: 3rem auto 0; }
+  .kamishibai-section { padding: 7rem 4vw; min-height: auto; }
+  .jungle-photo-foliage { width: 65%; opacity: .76; }
+  .foliage-left { left: -36%; }
+  .foliage-right { right: -36%; }
+  .jungle-photo-rays { width: 100%; left: 0; opacity: .4; }
+  .jungle-photo-credit { margin-bottom: -5rem; padding: 0 2rem; line-height: 1.8; }
+  .story-stage { position: relative; display: block; }
+  .wood-frame { width: 100%; padding: .8rem; }
+  .story-page { grid-template-columns: 1fr; min-height: 0; }
+  .story-page > .art-visual { aspect-ratio: 4/3; }
+  .story-caption { padding: 1.5rem; min-height: 180px; }
+  .story-caption h3 { margin: .8rem 0 1rem; }
+  .story-caption p { padding-bottom: 2rem; font-size: .88rem; }
+  .story-caption::before { inset: .6rem; }
+  .story-spark { right: 1rem; top: 1rem; font-size: 1.4rem; }
+  .story-caption small { right: 1.2rem; bottom: 1rem; }
+  .story-arrow { position: absolute; z-index: 5; top: 33%; width: 3.6rem; height: 3.6rem; }
+  .story-arrow.prev { left: -1rem; }
+  .story-arrow.next { right: -1rem; }
+  .contact-section { padding: 8rem 6vw; }
+  .contact-section h2 { font-size: 3rem; }
+  .contact-actions { flex-direction: column; align-items: center; }
+  footer { grid-template-columns: 1fr; text-align: center; }
+  .footer-links { align-items: center; }
+  .art-modal { padding: 5rem 5vw 2rem; display: flex; flex-direction: column; overflow-y: auto; gap: 2rem; }
+  .modal-close { right: 1rem; top: 1rem; }
+  .modal-art { height: auto; width: min(100%, 360px); }
+  .modal-art .art-visual { width: 100%; height: auto; aspect-ratio: 4/5; }
+  .modal-copy { padding-bottom: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* =====================================================================
+   調整案で足した動き（案Bのアニメーションを、案Aの色に合わせて取り入れた）
+   ===================================================================== */
+
+/* ---- 入口：星がこちらへ流れてくる ---- */
+.hero-warp { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
+
+/* ---- 見出し：ときどき一瞬だけ色がずれる ---- */
+.glitch { position: relative; display: inline-block; font-weight: inherit; }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; opacity: 0; text-shadow: none; }
+.glitch::before { color: var(--orange); clip-path: inset(0 0 62% 0); animation: glitchA 6s steps(1) infinite; }
+.glitch::after { color: #5ec8ff; clip-path: inset(58% 0 0 0); animation: glitchB 6s steps(1) infinite; }
+.hero h1 span.glitch::before, .hero h1 span.glitch::after { animation-delay: 1.6s; }
+.hero:not(.is-active) .glitch::before, .hero:not(.is-active) .glitch::after { animation-play-state: paused; }
+@keyframes glitchA { 0%, 90%, 94%, 100% { opacity: 0; transform: none; } 91% { opacity: .9; transform: translateX(-6px); } 93% { opacity: .9; transform: translateX(4px); } }
+@keyframes glitchB { 0%, 91%, 96%, 100% { opacity: 0; transform: none; } 92% { opacity: .9; transform: translateX(6px); } 95% { opacity: .9; transform: translateX(-3px); } }
+
+/* ---- スクロールで、ぼかしから浮かび上がる（transform を持つ要素を壊さないよう translate を使う） ---- */
+.js .reveal { opacity: 0; translate: 0 32px; filter: blur(8px); transition: opacity 1s ease, translate 1s cubic-bezier(.2,.8,.2,1), filter 1s ease; }
+.js .reveal.is-in { opacity: 1; translate: 0 0; filter: none; }
+
+/* ---- 右端の計器 ---- */
+.scroll-gauge { position: fixed; z-index: 40; right: 1.1rem; top: 50%; display: flex; flex-direction: column; align-items: center; gap: .8rem; transform: translateY(-50%); font: 900 .6rem/1 var(--sans); letter-spacing: .14em; color: rgba(250,245,232,.55); pointer-events: none; mix-blend-mode: difference; }
+.scroll-gauge span:first-child { color: var(--yellow); font-size: .78rem; }
+.scroll-gauge i { position: relative; width: 2px; height: 20vh; background: rgba(250,245,232,.2); }
+.scroll-gauge b { position: absolute; inset: 0 0 auto; height: 0; background: var(--yellow); box-shadow: 0 0 10px var(--yellow); }
+
+/* ---- ギャラリー：正面の作品に光の筋が走る ---- */
+.ring-card.is-front .ring-card-face::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); background-size: 250% 100%; animation: cardShine 3.2s ease-in-out infinite; pointer-events: none; }
+@keyframes cardShine { from { background-position: 130% 0; } to { background-position: -130% 0; } }
+
+/* ---- コンタクト：星がゆっくり回る ---- */
+.star-left { animation: starSpin 26s linear infinite; }
+.star-right { animation: starSpin 18s linear infinite reverse; }
+@keyframes starSpin { from { rotate: 0deg; } to { rotate: 360deg; } }
+
+@media (max-width: 900px) {
+  .scroll-gauge { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; translate: none; filter: none; }
+  .hero-warp { display: none; }
+}
+
+/* =====================================================================
+   COSMOS（調整案）：宇宙空間に言葉が浮かぶ。スクロールすると奥へ進む
+   ===================================================================== */
+.cosmos-space { position: relative; height: 280vh; background: #030817; }
+.cosmos-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; perspective: 900px; background: radial-gradient(ellipse at 50% 50%, #0b1a44 0%, #040a1f 55%, #02050f 100%); }
+
+/* 星：2層を別々の速さで瞬かせる */
+.cosmos-stars, .cosmos-stars::before { position: absolute; inset: -5%; pointer-events: none; background-repeat: repeat; }
+.cosmos-stars { background-image: radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.6px), radial-gradient(circle, rgba(239,197,56,.8) 0 1px, transparent 1.6px); background-size: 97px 97px, 151px 151px; background-position: 13px 27px, 61px 89px; animation: twinkle 4s ease-in-out infinite; }
+.cosmos-stars::before { content: ''; background-image: radial-gradient(circle, rgba(140,190,255,.8) 0 .8px, transparent 1.3px), radial-gradient(circle, rgba(255,255,255,.6) 0 .6px, transparent 1.1px); background-size: 61px 61px, 43px 43px; background-position: 7px 41px, 29px 11px; animation: twinkle 6s -2s ease-in-out infinite; }
+.cosmos-nebula { position: absolute; inset: -20%; pointer-events: none; background: radial-gradient(ellipse 40% 30% at 28% 32%, rgba(120,70,200,.32), transparent 70%), radial-gradient(ellipse 35% 28% at 74% 70%, rgba(22,90,190,.38), transparent 70%), radial-gradient(ellipse 25% 20% at 62% 22%, rgba(230,97,56,.18), transparent 70%); filter: blur(10px); animation: nebulaDrift 30s ease-in-out infinite alternate; }
+
+/* 言葉の空間：JS が --fly（進んだ距離）と --tilt-x/y（マウスの傾き）を入れる */
+.cosmos-field { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) translateZ(var(--fly, 0px)); transition: transform .5s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.cosmos-word { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) translate3d(var(--x), var(--y), var(--z)); color: var(--c); font: 700 var(--size)/1.2 var(--display); white-space: nowrap; letter-spacing: .06em; text-shadow: 0 0 18px var(--glow), 0 0 2px rgba(0,0,0,.6); transition: opacity .3s linear; }
+.cosmos-word b { display: inline-block; font-weight: inherit; animation: wordDrift var(--dur) ease-in-out var(--delay) infinite alternate; }
+.cosmos-word.is-latin { font-family: var(--sans); font-weight: 900; letter-spacing: .3em; }
+
+/* 見出しの周りを回る、文字の軌道 */
+.cosmos-orbit { --ring-r: min(30vw, 300px); position: absolute; z-index: 2; width: calc(var(--ring-r) * 2); aspect-ratio: 1; transform: rotateX(64deg) rotateZ(-12deg); transform-style: preserve-3d; pointer-events: none; }
+.cosmos-orbit::before { content: ''; position: absolute; inset: -4%; border-radius: 50%; border: 1px solid rgba(239,197,56,.35); box-shadow: 0 0 30px rgba(239,197,56,.15), inset 0 0 30px rgba(239,197,56,.1); }
+.cosmos-ring { position: absolute; inset: 0; animation: ringSpin 36s linear infinite; color: transparent; font-size: 0; }
+.cosmos-ring span { position: absolute; left: 50%; top: 0; height: var(--ring-r); transform: translateX(-50%) rotate(var(--a)); transform-origin: 50% 100%; color: var(--yellow); font: 700 clamp(.9rem, 1.6vw, 1.3rem)/1 var(--display); text-shadow: 0 0 10px rgba(239,197,56,.8); }
+
+/* 中央の見出し */
+.cosmos-space .cosmos-copy { position: relative; z-index: 3; max-width: 90vw; text-align: center; pointer-events: none; }
+.cosmos-space .cosmos-copy > p:first-child { margin: 0 0 1rem; color: var(--yellow); font-size: .8rem; font-weight: 900; letter-spacing: .5em; }
+.cosmos-space .cosmos-copy h3 { margin: 0; font: 700 clamp(2.4rem, 6vw, 5.6rem)/1.15 var(--display); color: var(--paper-light); text-shadow: 0 0 30px rgba(120,160,255,.55), 0 0 80px rgba(120,70,200,.45); }
+.cosmos-sub { margin: 1.4rem 0 0; color: rgba(250,245,232,.75); font-size: clamp(.85rem, 1.3vw, 1.05rem); letter-spacing: .14em; }
+.cosmos-hint { position: absolute; z-index: 3; left: 50%; bottom: 2rem; margin: 0; transform: translateX(-50%); color: rgba(250,245,232,.55); font: 900 .6rem/1 var(--sans); letter-spacing: .3em; white-space: nowrap; }
+.cosmos-hint span { color: var(--yellow); }
+
+/* 流れ星 */
+.shooting-star { position: absolute; z-index: 1; top: 12%; left: 70%; width: 160px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(250,245,232,.95), transparent); opacity: 0; transform: rotate(-28deg); animation: shoot 7s ease-in infinite; pointer-events: none; }
+.shooting-star:nth-of-type(2) { top: 30%; left: 92%; animation-delay: 2.6s; animation-duration: 9s; }
+.shooting-star:nth-of-type(3) { top: 6%; left: 40%; width: 110px; animation-delay: 5.2s; animation-duration: 8s; }
+
+@keyframes twinkle { 50% { opacity: .45; } }
+@keyframes nebulaDrift { to { transform: translate(4%, -3%) rotate(6deg) scale(1.08); } }
+@keyframes wordDrift { from { transform: translate(0, 0) rotate(0); } to { transform: translate(var(--dx), var(--dy)) rotate(var(--dr)); } }
+@keyframes ringSpin { to { transform: rotate(360deg); } }
+@keyframes shoot { 0% { opacity: 0; translate: 0 0; } 4% { opacity: 1; } 14%, 100% { opacity: 0; translate: -520px 280px; } }
+
+/* 画面外ではまとめて止める */
+.cosmos-space:not(.is-active) *, .cosmos-space:not(.is-active) *::before { animation-play-state: paused !important; }
+
+@media (max-width: 640px) {
+  .cosmos-space { height: 240vh; }
+  .cosmos-orbit { --ring-r: 44vw; }
+  .cosmos-space .cosmos-copy h3 { font-size: 1.9rem; }
+  .cosmos-sub { font-size: .76rem; letter-spacing: .06em; }
+  .cosmos-hint { bottom: 1.4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cosmos-space { height: auto; }
+  .cosmos-sticky { position: relative; }
+  .shooting-star { display: none; }
+}
