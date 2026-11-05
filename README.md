@@ -3,7 +3,7 @@
 ブッボス（BUBBOSU）のホームページです。キャッチコピーは「地球がアトラクション。」。
 
 - 最終案（`src/`）が公開するページです。CSS と JavaScript を埋め込んだ 1 枚の `index.html` にビルドします
-- 案A〜C（`drafts/`）は検討用のデザイン案です。本番には公開しません。`npm run dev` か `npm run build:drafts` でビルドすると `dist/a.html` などができ、ヘッダーの切り替えボタン（調整案／案A／案B／案C）で行き来できます。「調整案」は最終案（`src/`）のことです。最終案のページに置いた切り替えボタンは案A〜C込みのビルドだけに出て、`npm run build`（本番）では自動で消えます
+- 案A〜C（`drafts/`）は検討用のデザイン案です。本番には公開しません。`npm run dev` か `npm run build:drafts` でビルドすると `dist/a.html` などができ、ヘッダーの切り替えボタン（調整案／案A／案B／案C）で行き来できます。「調整案」は最終案（`src/`）のことです。最終案のページには切り替えボタンを置いていません（案A〜Cから調整案へは行けますが、調整案からはヘッダーで戻れません）
 - もとは React（App.tsx と CSS）で作られたデザインを、HTML / CSS / JavaScript だけで書き直したものです。3D の作品リングは React 部品の代わりに `src/main.js` で作り直しています
 
 ## デザイン案
@@ -53,6 +53,9 @@ Node.js 20 以上が必要です（`.node-version` は 22）。
 
 - 作品画像は `assets/art-*.jpg`（全案で共通）
 - 調整案（最終案）の文章は `src/main.js` の `storyPages`（紙芝居）、`attractionDetails`（活動のゲート）、`doorWords`（遠くの扉のひとこと）、`cosmosWords`（COSMOS に浮かぶ言葉）
+- 作品の一覧（`src/main.js` の `artworks`）は BASE のショップの内容（作品名・ことば・価格・作品ページ）をもとにしている。紙芝居もこの一覧から作られる
+- 作品を足すときは、画像を `assets/` に置き、`src/main.js` の `artworks` に1行足すだけ（ギャラリーのカードは自動で作られる）。作品名・制作年・画材・サイズ・価格・BASE の作品ページの URL は、わかる項目だけ書けば拡大表示に出る
+- お問い合わせ先はメールだけ（`src/main.js` の `contactMail`）
 - 案A〜Cの文章は、それぞれの案の JS に入っています（案A `drafts/js/main.js`、案B `drafts/js/b.js`、案C `drafts/js/c.js`）。調整案を直しても案A〜Cには反映されません
 
 ## 公開

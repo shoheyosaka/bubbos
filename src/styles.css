@@ -50,27 +50,6 @@ main > section:not(.hero) { content-visibility: auto; contain-intrinsic-size: au
 .menu-button { display: none; width: 3rem; height: 3rem; background: rgba(7,24,58,.35); border: 1px solid var(--paper-light); border-radius: 50%; align-items: center; justify-content: center; flex-direction: column; gap: .35rem; cursor: pointer; }
 .menu-button span { width: 1.2rem; height: 2px; background: var(--paper-light); }
 
-/* ---- ヘッダーのデザイン案切り替え（案A〜C込みのビルドだけに出る） ---- */
-.draft-switch {
-  display: flex; gap: .2rem; padding: .25rem; border: 1px solid rgba(25,25,22,.35); border-radius: 999px;
-  background: rgba(250,245,232,.94); box-shadow: 0 6px 18px rgba(0,0,0,.25);
-  font: 900 .62rem/1 'Noto Sans JP', sans-serif; text-shadow: none;
-}
-.draft-switch a { padding: .55rem .8rem; border-radius: 999px; color: #191916; white-space: nowrap; }
-.draft-switch a:hover { background: rgba(25,25,22,.08); }
-.draft-switch a[aria-current="page"] { background: #191916; color: #faf5e8; }
-
-@media (max-width: 900px) {
-  .site-header { gap: .6rem; }
-  .draft-switch { margin-left: auto; }
-}
-@media (max-width: 640px) {
-  .site-header .logo { flex-shrink: 0; }
-  .site-header .logo small { display: none; }
-  .draft-switch { gap: 0; padding: .2rem; font-size: .56rem; }
-  .draft-switch a { padding: .5rem .45rem; }
-}
-
 /* ---- ヒーロー ---- */
 .hero { --jungle-x: 0; --jungle-y: 0; position: relative; min-height: 100svh; padding: 8rem 3vw 4rem; display: grid; grid-template-columns: .72fr 1.28fr; align-items: center; background: url('assets/art-cosmos.jpg') center/cover; color: var(--paper-light); isolation: isolate; }
 .hero:not(.is-active) h1, .hero:not(.is-active) h1 span, .hero:not(.is-active) .cosmic-jungle *, .hero:not(.is-active) .hero-ride *, .hero:not(.is-active) .hero-ride *::after, .hero:not(.is-active) .scroll-cue span { animation-play-state: paused !important; }
@@ -632,4 +611,28 @@ footer > small { grid-column: 1/-1; margin-top: 3rem; padding-top: 1rem; border-
   .cosmos-space { height: auto; }
   .cosmos-sticky { position: relative; }
   .shooting-star { display: none; }
+}
+
+/* =====================================================================
+   ヒアリングの回答を反映：コンタクトのお声がけ・連絡先、作品の詳しい情報
+   ===================================================================== */
+.contact-call { position: relative; z-index: 2; max-width: 760px; margin: 3.5rem auto 0; padding: 2rem 2.2rem; border: 2px solid var(--paper-light); border-radius: 18px; background: rgba(7,24,58,.6); backdrop-filter: blur(6px); }
+.contact-call-title { margin: 0 0 1.2rem; color: var(--yellow); font: 700 1.15rem/1.4 var(--display); }
+.contact-works { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; margin: 0 0 1.8rem; padding: 0; list-style: none; }
+.contact-works li { padding: .4rem .95rem; border: 1px solid rgba(250,245,232,.55); border-radius: 999px; font-size: .78rem; font-weight: 700; }
+.contact-links { display: grid; grid-template-columns: 1fr; justify-items: center; gap: .7rem; margin: 0; padding: 0; list-style: none; text-align: left; }
+.contact-links li { display: flex; flex-direction: column; align-items: center; gap: .2rem; text-align: center; padding: .85rem 1.1rem; border-radius: 12px; background: rgba(250,245,232,.1); }
+.contact-links span { font-size: .62rem; font-weight: 900; letter-spacing: .16em; opacity: .7; }
+.contact-links a { color: var(--yellow); font-size: 1.05rem; font-weight: 700; word-break: break-all; border-bottom: 1px solid transparent; width: fit-content; }
+.contact-links a:hover { border-color: currentColor; }
+.contact-links .is-off em { font-style: normal; font-size: .82rem; opacity: .5; }
+
+.modal-copy > .modal-comment { margin: 0 0 1.4rem; color: var(--paper-light); font: 700 clamp(.95rem, 1.3vw, 1.1rem)/2 var(--display); letter-spacing: .04em; white-space: pre-line; }
+.modal-info { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1.4rem; margin: 0 0 1.4rem; font-size: .86rem; }
+.modal-info dt { opacity: .6; font-size: .72rem; font-weight: 900; letter-spacing: .12em; padding-top: .15rem; }
+.modal-info dd { margin: 0; font-weight: 700; }
+
+@media (max-width: 640px) {
+  .contact-call { padding: 1.6rem 1.2rem; }
+  .contact-links { grid-template-columns: 1fr; }
 }

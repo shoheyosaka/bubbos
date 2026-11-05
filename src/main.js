@@ -2,16 +2,56 @@
 // メニュー、ヒーローの視差、文字の集合、3Dリングギャラリー、活動の光の扉、紙芝居、作品の拡大表示
 // 調整案で追加：星のワープ、COSMOS の言葉の宇宙、スクロールで浮かび上がる表示、右端の計器
 
-// 作品（ギャラリーのリングと同じ順番）
+// 作品（この順番でギャラリーのリングに並ぶ。中身は BASE のショップに載っている内容）
+// 新しい作品は1行足すだけ。画像を assets/ に置き、わかる項目だけ書けばよい（空の項目は表示されない）
+//   title: 作品名 / comment: 作品のことば / year: 制作年 / medium: 画材など / size: サイズ / price: 価格 / shop: BASE の作品ページ
+// TODO: 制作年・画材・サイズは BASE に載っていないので、お客様からもらって埋める
 const artworks = [
-  { id: 1, image: "assets/art-sun.jpg", bg: "#174A98" },
-  { id: 2, image: "assets/art-portrait.jpg", bg: "#E7DFCA" },
-  { id: 3, image: "assets/art-cosmos.jpg", bg: "#E25437" },
-  { id: 4, image: "assets/art-hills.jpg", bg: "#173D34" },
-  { id: 5, image: "assets/art-flower.jpg", bg: "#F0C83B" },
-  { id: 6, image: "assets/art-trees.jpg", bg: "#A84C38" },
-  { id: 7, image: "assets/art-stars.jpg", bg: "#D8B56E" },
+  {
+    id: 1, image: "assets/art-flower.jpg", bg: "#F0C83B", title: "恋をもたらす女神花",
+    comment: "この花は、誰かを探しに行くための花ではありません。\n自分の中心に還ったとき、すでに始まっている恋に気づくための花です。",
+    year: "", medium: "原画（一点物）", size: "", price: "¥320,000", shop: "https://bubbosu.base.shop/items/132005938",
+  },
+  {
+    id: 2, image: "assets/art-mountain.jpg", bg: "#3E7E4A", title: "澄んだ目でみた山",
+    comment: "目が澄んだ瞬間、いつも汚れて見えていた山が、青く見えた。\n美しく愛してくれる世界は、ずっと変わっていなかった。",
+    year: "", medium: "原画（一点物）", size: "", price: "¥240,000", shop: "https://bubbosu.base.shop/items/132006160",
+  },
+  {
+    id: 3, image: "assets/art-portrait.jpg", bg: "#E7DFCA", title: "BUDDHA IN THE BODY",
+    comment: "幸せは分泌される。\n悟りもまた、現象として起こる。\nそれを、見ているものが在る。",
+    year: "", medium: "", size: "", price: "¥310,000", shop: "https://bubbosu.base.shop/items/132006551",
+  },
+  {
+    id: 4, image: "assets/art-sun.jpg", bg: "#174A98", title: "After",
+    comment: "世界は、何も変わっていない。\n変わったのは、見ている位置だけだ。",
+    year: "", medium: "原画", size: "", price: "¥240,000", shop: "https://bubbosu.base.shop/items/132006697",
+  },
+  {
+    id: 5, image: "assets/art-hills.jpg", bg: "#173D34", title: "グレートマザー",
+    comment: "ずっと、世界は与えていた。\n私が、受け取れていなかっただけだった。\n無限の豊かさはあなたのものです。",
+    year: "", medium: "", size: "", price: "¥520,000", shop: "https://bubbosu.base.shop/items/132006924",
+  },
+  {
+    id: 6, image: "assets/art-trees.jpg", bg: "#A84C38", title: "空から、花が降ってきた。",
+    comment: "ある日、空から、花が降ってきた。\n願いじゃなくて、祝福だった。",
+    year: "", medium: "原画（一点物）", size: "", price: "¥88,000", shop: "https://bubbosu.base.shop/items/132007012",
+  },
+  {
+    id: 7, image: "assets/art-stars.jpg", bg: "#D8B56E", title: "開合功",
+    comment: "開いたら、入ってきた。\n合わせたら、すでに満ちていた。",
+    year: "", medium: "原画（一点物）", size: "", price: "¥360,000", shop: "https://bubbosu.base.shop/items/132007386",
+  },
+  {
+    id: 8, image: "assets/art-cosmos.jpg", bg: "#E25437", title: "シッダールタ",
+    comment: "この絵は、その感覚を言葉にする前の層で、そのまま置いたものです。\n共鳴する人にだけ、静かに作用するタイプのものです。",
+    year: "", medium: "DVD・小説・原画の3点セット", size: "", price: "¥240,000", shop: "https://bubbosu.base.shop/items/132007773",
+  },
 ]
+const shopTop = "https://bubbosu.base.shop/"
+
+// お問い合わせ先（メールだけ）
+const contactMail = "krazybee3333@gmail.com"
 
 // 活動の扉（キーは index.html の data-door）
 const attractionDetails = {
@@ -73,51 +113,13 @@ const cosmosWords = [
   "終わりは、はじまりの裏側", "受け取るだけでいい", "一即多", "満ちている", "ALL IS ONE", "観る",
 ]
 
-// 紙芝居
-const storyPages = [
-  {
-    kicker: "BASE SHOP WORDS / 01",
-    title: "恋をもたらす女神花",
-    text: "この花は、誰かを探しに行くための花ではありません。\n自分の中心に還ったとき、すでに始まっている恋に気づくための花です。",
-    art: 0,
-  },
-  {
-    kicker: "BASE SHOP WORDS / 02",
-    title: "澄んだ目でみた山",
-    text: "目が澄んだ瞬間、いつも汚れて見えていた山が、青く見えた。\n美しく愛してくれる世界は、ずっと変わっていなかった。",
-    art: 1,
-  },
-  {
-    kicker: "BASE SHOP WORDS / 03",
-    title: "BUDDHA IN THE BODY",
-    text: "幸せは分泌される。\n悟りもまた、現象として起こる。\nそれを、見ているものが在る。",
-    art: 2,
-  },
-  {
-    kicker: "BASE SHOP WORDS / 04",
-    title: "After",
-    text: "世界は、何も変わっていない。\n変わったのは、見ている位置だけだ。",
-    art: 3,
-  },
-  {
-    kicker: "BASE SHOP WORDS / 05",
-    title: "グレートマザー",
-    text: "ずっと、世界は与えていた。\n私が、受け取れていなかっただけだった。\n無限の豊かさはあなたのものです。",
-    art: 4,
-  },
-  {
-    kicker: "BASE SHOP WORDS / 06",
-    title: "空から、花が降ってきた。",
-    text: "ある日、空から、花が降ってきた。\n願いじゃなくて、祝福だった。",
-    art: 5,
-  },
-  {
-    kicker: "BASE SHOP WORDS / 07",
-    title: "開合功",
-    text: "開いたら、入ってきた。\n合わせたら、すでに満ちていた。",
-    art: 6,
-  },
-]
+// 紙芝居：作品の絵と、BASE に載っている作品のことばを1枚ずつめくる
+const storyPages = artworks.map((art, index) => ({
+  kicker: `BASE SHOP WORDS / ${String(index + 1).padStart(2, "0")}`,
+  title: art.title,
+  text: art.comment,
+  art: index,
+}))
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
 const pad2 = (value) => String(value).padStart(2, "0")
@@ -134,6 +136,8 @@ const setScrollLock = (key, locked) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initMenu()
+  renderArtworks()
+  renderContact()
   initHero()
   initScatter()
   const modal = initArtModal()
@@ -246,6 +250,31 @@ function initScatter() {
   })
 }
 
+// ---- ギャラリーのカードを artworks から作る ----
+function renderArtworks() {
+  const stage = document.querySelector("[data-ring-stage]")
+  if (!stage) return
+  stage.innerHTML = artworks
+    .map((art) => {
+      const number = pad2(art.id)
+      const name = art.title ? escapeHtml(art.title) : `ARTWORK ${number}`
+      return `
+        <button type="button" class="ring-card" data-ring-card aria-label="${name} を見る">
+          <span class="ring-card-face"><img src="${art.image}" alt="ブッボスの作品 ${name}" loading="lazy"><span class="ring-card-caption"><small>BUBBOSU / ORIGINAL WORK</small><b>${name}</b></span></span>
+          <span class="ring-card-back" aria-hidden="true"></span>
+        </button>`
+    })
+    .join("")
+}
+
+// ---- お問い合わせ先 ----
+function renderContact() {
+  const box = document.querySelector("[data-contact-links]")
+  if (!box) return
+  box.innerHTML = `
+    <li><span>お問い合わせ（メール）</span><a href="mailto:${contactMail}">${contactMail}</a></li>`
+}
+
 // ---- 作品の拡大表示 ----
 function initArtModal() {
   const modal = document.querySelector("[data-art-modal]")
@@ -253,6 +282,11 @@ function initArtModal() {
   const visual = modal.querySelector("[data-art-modal-visual]")
   const image = modal.querySelector("[data-art-modal-image]")
   const number = modal.querySelector("[data-art-modal-number]")
+  const title = modal.querySelector("[data-art-modal-title]")
+  const info = modal.querySelector("[data-art-modal-info]")
+  const note = modal.querySelector("[data-art-modal-note]")
+  const comment = modal.querySelector("[data-art-modal-comment]")
+  const shop = modal.querySelector("[data-art-modal-shop]")
   const closeButton = modal.querySelector("[data-art-modal-close]")
   let returnFocus = null
 
@@ -274,7 +308,15 @@ function initArtModal() {
       returnFocus = document.activeElement
       visual.style.background = art.bg
       image.src = art.image
-      number.textContent = `ARTWORK ${pad2(art.id)}`
+      number.textContent = `ORIGINAL WORK / ${pad2(art.id)}`
+      title.textContent = art.title || `ARTWORK ${pad2(art.id)}`
+      const rows = [["制作年", art.year], ["画材", art.medium], ["サイズ", art.size], ["価格", art.price]].filter(([, value]) => value)
+      info.innerHTML = rows.map(([label, value]) => `<dt>${label}</dt><dd>${escapeHtml(value)}</dd>`).join("")
+      info.hidden = !rows.length
+      comment.textContent = art.comment || ""
+      comment.hidden = !art.comment
+      note.hidden = rows.length > 0 || Boolean(art.title)
+      shop.href = art.shop || shopTop
       modal.hidden = false
       setScrollLock("modal", true)
       closeButton.focus()
@@ -581,7 +623,7 @@ function initStory() {
     const art = artworks[story.art]
     page.innerHTML = `
       <div class="art-visual photo-art" style="background: ${art.bg}">
-        <img src="${art.image}" alt="ブッボスによる、花や星が鮮やかな色と力強い線で描かれた作品">
+        <img src="${art.image}" alt="ブッボスの作品「${escapeHtml(story.title)}」">
         <span class="placeholder-label">ARTWORK DETAIL</span>
       </div>
       <div class="story-caption">
@@ -603,6 +645,7 @@ function initStory() {
     render()
   }
 
+  render()
   section.querySelector("[data-story-prev]").addEventListener("click", () => go(-1))
   section.querySelector("[data-story-next]").addEventListener("click", () => go(1))
   section.addEventListener("touchstart", (event) => {
