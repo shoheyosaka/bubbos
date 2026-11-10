@@ -4,10 +4,47 @@
 <meta charset="utf-8">
 <script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- TODO: 公開前に外す（検索エンジンに載せない設定） -->
+<!-- noindex:start 確認用（npm run build:drafts）だけ検索に載せない。本番（npm run build）ではビルドで消える -->
 <meta name="robots" content="noindex">
-<title>ブッボス｜地球がアトラクション。</title>
-<meta name="description" content="アートと遊びで、世界の見え方が変わる。ブッボス（BUBBOSU）の作品と活動を紹介するサイトです。">
+<!-- noindex:end -->
+<title>ブッボス（BUBBOSU）｜地球がアトラクション。</title>
+<meta name="description" content="ブッボス（BUBBOSU）の公式サイト。アートと遊びで、世界の見え方が変わる。原画作品、ワークショップ、コーチング、癒やしのセッション、紙芝居などの活動を紹介します。">
+<link rel="canonical" href="https://bubbosu.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ブッボス（BUBBOSU）">
+<meta property="og:title" content="ブッボス（BUBBOSU）｜地球がアトラクション。">
+<meta property="og:description" content="アートと遊びで、世界の見え方が変わる。ブッボス（BUBBOSU）の作品と活動を紹介するサイトです。">
+<meta property="og:url" content="https://bubbosu.com/">
+<meta property="og:image" content="https://bubbosu.com/assets/og-image.jpg">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<!-- 検索エンジン向けの名前の情報（サイト名と別名、公式のショップ）。SNS ができたら sameAs に足す -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://bubbosu.com/#website",
+      "name": "ブッボス",
+      "alternateName": ["BUBBOSU", "ぶっぼす"],
+      "url": "https://bubbosu.com/",
+      "inLanguage": "ja",
+      "publisher": { "@id": "https://bubbosu.com/#bubbosu" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://bubbosu.com/#bubbosu",
+      "name": "ブッボス",
+      "alternateName": "BUBBOSU",
+      "url": "https://bubbosu.com/",
+      "image": "https://bubbosu.com/assets/og-image.jpg",
+      "description": "アートと遊びで、世界の見え方を変える。原画作品の制作・販売、展示、ワークショップ、コーチング、癒やしのセッション、紙芝居の上演。",
+      "sameAs": ["https://bubbosu.base.shop/"]
+    }
+  ]
+}
+</script>
 <!-- TODO: ファビコン（assets/ に favicon-32.png と apple-touch-icon.png を置いてから下の2行を戻す） -->
 <!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"> -->
 <!-- <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"> -->
@@ -70,7 +107,7 @@
       </div>
       <div class="hero-copy">
         <p class="eyebrow">WELCOME TO BUBBOSU'S PLANET</p>
-        <h1><b class="glitch" data-text="地球が">地球が</b><br><span class="glitch" data-text="アトラクション。">アトラクション。</span></h1>
+        <h1><span class="sr-only">ブッボス（BUBBOSU）｜</span><b class="glitch" data-text="地球が">地球が</b><br><span class="glitch" data-text="アトラクション。">アトラクション。</span></h1>
         <p class="hero-sub">アートと遊びで、世界の見え方が変わる。</p>
       </div>
       <!-- 地球が軸の観覧車（絵の代わり）。ゴンドラは逆向きに回して、いつも下にぶら下がるようにしている -->

@@ -19,6 +19,7 @@ const tailwindCli = join(root, "node_modules", "@tailwindcss", "cli", "dist", "i
 const CSS_MARK = /<!-- build:css[^>]*-->/
 const JS_MARK = /<!-- build:js[^>]*-->/
 const DRAFTS_BLOCK = /[ \t]*<!-- drafts:start[\s\S]*?<!-- drafts:end -->\n?/g
+const NOINDEX_BLOCK = /[ \t]*<!-- noindex:start[\s\S]*?<!-- noindex:end -->\n?/
 const withDrafts = process.argv.includes("--drafts")
 
 function compileCss() {
@@ -41,6 +42,8 @@ function build() {
 
   // 本番では案A〜Cへの切り替えを消す（リンク先が dist/ に入らないため）
   if (!withDrafts) html = html.replace(DRAFTS_BLOCK, "")
+  // 本番だけ検索に載せる（確認用の GitHub Pages は noindex のまま）
+  if (!withDrafts) html = html.replace(NOINDEX_BLOCK, "")
 
   const css = compileCss()
   const js = readFileSync(join(src, "main.js"), "utf8").trimEnd()

@@ -65,9 +65,9 @@ Node.js 20 以上が必要です（`.node-version` は 22）。
 
 ## 公開前チェックリスト
 
-- [ ] `<meta name="robots" content="noindex">` を外す
-- [ ] `grep -n TODO src/index.html` で残りがない（ファビコン、問い合わせ先、作品情報、仮テキスト）
-- [ ] 作品モーダルの「作品情報をここに表示」を正式な情報にする
-- [ ] 「活動について問い合わせる」ボタンのリンク先を決める
-- [ ] 独自ドメインが決まったら `public/robots.txt` に Sitemap を足す
+- [x] 検索よけ（noindex）は本番ビルド（`npm run build`）で自動で消える。確認用（`build:drafts`）では残る
+- [x] ドメイン `https://bubbosu.com/` を canonical・OGP・名前の情報（JSON-LD）・`public/sitemap.xml`・`public/robots.txt` に入れた
+- [ ] `grep -n TODO src/index.html` で残りがない（ファビコン、作品の制作年・サイズ）
+- [ ] 公開後、Google Search Console に bubbosu.com を登録し、サイトマップを送る
+- [ ] BASE のショップや SNS のプロフィールに https://bubbosu.com/ を載せる（SNS ができたら `src/index.html` の JSON-LD の `sameAs` にも足す）
 - [ ] 実際のスマホ（iPhone と Android）で全体を見た
