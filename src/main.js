@@ -582,17 +582,45 @@ function initDoors() {
     void note.offsetWidth
     note.style.animation = ""
   }
+  // 扉を開く前に「ひらけ、ごま！」の呪文を扉の上に浮かべる
+  const spell = document.createElement("p")
+  spell.className = "door-spell"
+  spell.setAttribute("aria-hidden", "true")
+  spell.innerHTML = [..."ひらけ、ごま！"].map((char, i) => `<span style="--i: ${i}">${char}</span>`).join("")
+  document.body.append(spell)
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  let spellTimer = null
+  const castSpell = (door) => {
+    const rect = door.getBoundingClientRect()
+    spell.style.left = `${rect.left + rect.width / 2}px`
+    spell.style.top = `${rect.top + Math.min(rect.height * 0.4, 100)}px`
+    spell.style.setProperty("--c", door.style.getPropertyValue("--c"))
+    spell.classList.remove("is-cast")
+    void spell.offsetWidth
+    spell.classList.add("is-cast")
+  }
+
   const close = () => {
+    clearTimeout(spellTimer)
     active = null
     render()
   }
-  const toggle = (type, id) => {
-    active = active?.type === type && active.id === id ? null : { type, id }
-    render()
+  const toggle = (type, id, door) => {
+    clearTimeout(spellTimer)
+    if (active?.type === type && active.id === id) {
+      close()
+      return
+    }
+    castSpell(door)
+    // 呪文をとなえ終わってから扉が開く
+    spellTimer = setTimeout(() => {
+      active = { type, id }
+      render()
+    }, reduceMotion ? 0 : 650)
   }
 
-  nearDoors.forEach((door) => door.addEventListener("click", () => toggle("near", door.dataset.door)))
-  farDoors.forEach((door) => door.addEventListener("click", () => toggle("far", door.dataset.far)))
+  nearDoors.forEach((door) => door.addEventListener("click", () => toggle("near", door.dataset.door, door)))
+  farDoors.forEach((door) => door.addEventListener("click", () => toggle("far", door.dataset.far, door)))
   note.addEventListener("click", (event) => {
     if (event.target.closest("[data-note-close]")) close()
   })

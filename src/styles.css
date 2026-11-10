@@ -250,6 +250,18 @@ main > section:not(.hero) { content-visibility: auto; contain-intrinsic-size: au
 .light-door.is-open .light-door-frame { box-shadow: 0 0 26px var(--c), 0 0 70px var(--c), inset 0 0 20px var(--c); }
 @keyframes doorGlow { 50% { box-shadow: 0 0 26px var(--c), inset 0 0 22px color-mix(in srgb, var(--c) 45%, transparent); } }
 
+/* 扉を開く呪文「ひらけ、ごま！」（JS が body の直下に置き、押した扉の上へ動かす） */
+.door-spell { --c: var(--yellow); position: fixed; z-index: 121; margin: 0; white-space: nowrap; pointer-events: none; transform: translate(-50%, -50%); font: 900 clamp(1.3rem, 2.6vw, 2rem)/1 var(--display); letter-spacing: .08em; color: #fff; }
+.door-spell span { display: inline-block; opacity: 0; text-shadow: 0 0 10px var(--c), 0 0 26px var(--c), 0 0 2px #fff; }
+.door-spell.is-cast span { animation: spellChar 1.7s cubic-bezier(.2,.8,.2,1) calc(var(--i) * 65ms) both; }
+@keyframes spellChar {
+  0% { opacity: 0; transform: translateY(.7em) scale(.4) rotate(-12deg); filter: blur(6px); }
+  22% { opacity: 1; transform: translateY(0) scale(1.15); filter: blur(0); }
+  32% { transform: translateY(0) scale(1); }
+  70% { opacity: 1; transform: translateY(-.15em); }
+  100% { opacity: 0; transform: translateY(-1.2em) scale(1.05); filter: blur(4px); }
+}
+
 /* 画面下のカード（JS が body の直下へ移す）。--c は開いた扉の色 */
 .door-note { --c: var(--yellow); position: fixed; z-index: 120; left: 50%; bottom: 1.2rem; width: min(460px, 90vw); padding: 1.4rem 3rem 1.4rem 1.6rem; border: 1px solid rgba(250,245,232,.18); border-top: 3px solid var(--c); border-radius: 14px; background: rgba(8,12,30,.82); color: var(--paper-light); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 -8px 60px color-mix(in srgb, var(--c) 35%, transparent), 0 20px 40px rgba(0,0,0,.5); transform: translateX(-50%); animation: noteIn .5s cubic-bezier(.2,.8,.2,1); }
 .door-note > button { position: absolute; top: .7rem; right: .8rem; padding: 0; border: 0; background: none; color: var(--paper-light); font-size: 1.4rem; line-height: 1; opacity: .7; cursor: pointer; }
